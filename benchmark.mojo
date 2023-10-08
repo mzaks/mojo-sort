@@ -1,6 +1,7 @@
-from random import random_ui64
+from random import random_ui64, random_si64, random_float64
 from math import min
 from math.limit import max_or_inf
+from memory.unsafe import bitcast
 from vec import print_v
 from time import now
 from algorithm.sort import sort
@@ -10,10 +11,16 @@ from selection_sort import selection_sort
 from insertion_sort import insertion_sort
 from counting_sort import counting_sort
 
-fn random_uivec[D: DType](size: Int, max: Int = 3000) -> DynamicVector[SIMD[D, 1]]:
+fn random_vec[D: DType](size: Int, max: Int = 3000) -> DynamicVector[SIMD[D, 1]]:
     var result = DynamicVector[SIMD[D, 1]](size)
     for _ in range(size):
-        result.push_back(random_ui64(0, max).cast[D]())
+        @parameter
+        if D == DType.int8 or D == DType.int16 or D == DType.int32 or D == DType.int64:
+            result.push_back(random_si64(0, max).cast[D]())
+        elif D == DType.float16 or D == DType.float32 or D == DType.float64:
+            result.push_back(random_float64(0, max).cast[D]())
+        else:
+            result.push_back(random_ui64(0, max).cast[D]())
     return result
 
 fn assert_sorted[D: DType](vector: DynamicVector[SIMD[D, 1]]):
@@ -26,7 +33,7 @@ fn assert_sorted[D: DType](vector: DynamicVector[SIMD[D, 1]]):
 fn benchmark[D: DType, func: fn(inout DynamicVector[SIMD[D, 1]]) -> None](
     name: StringLiteral, size: Int, max: Int = 3000
 ):
-    let v = random_uivec[D](size, max)
+    let v = random_vec[D](size, max)
     var v1 = v.deepcopy()
     var min_duration = max_or_inf[DType.int64]()
     for _ in range(10):
@@ -51,6 +58,12 @@ fn main():
     benchmark[DType.uint8, counting_sort[DType.uint8]]("Counting sort", 300)
     benchmark[DType.uint8, radix_sort[DType.uint8]]("Radix sort", 300)
 
+    benchmark[DType.int8, selection_sort[DType.int8]]("Selection sort", 300)
+    benchmark[DType.int8, insertion_sort[DType.int8]]("Insertion sort", 300)
+    benchmark[DType.int8, std_sort[DType.int8]]("Std sort", 300)
+    benchmark[DType.int8, quick_sort[DType.int8]]("Quick sort", 300)
+    benchmark[DType.int8, radix_sort[DType.int8]]("Radix sort", 300)
+
     benchmark[DType.uint16, selection_sort[DType.uint16]]("Selection sort", 3000)
     benchmark[DType.uint16, insertion_sort[DType.uint16]]("Insertion sort", 3000)
     benchmark[DType.uint16, std_sort[DType.uint16]]("Std sort", 3000)
@@ -58,9 +71,38 @@ fn main():
     benchmark[DType.uint16, counting_sort[DType.uint16]]("Counting sort", 3000)
     benchmark[DType.uint16, radix_sort[DType.uint16]]("Radix sort", 3000)
 
-    # benchmark[DType.uint32, selection_sort[DType.uint32]]("Selection sort", 300000, 2_000_000_000)
-    # benchmark[DType.uint32, insertion_sort[DType.uint32]]("Insertion sort", 300000, 2_000_000_000)
-    benchmark[DType.uint32, std_sort[DType.uint32]]("Std sort", 300000, 2_000_000_000)
-    benchmark[DType.uint32, quick_sort[DType.uint32]]("Quick sort", 300000, 2_000_000_000)
-    # benchmark[DType.uint32, counting_sort[DType.uint32]]("Counting sort", 30000, 2_000_000_000)
-    benchmark[DType.uint32, radix_sort[DType.uint32]]("Radix sort", 300000, 2_000_000_000)
+    benchmark[DType.int16, selection_sort[DType.int16]]("Selection sort", 3000)
+    benchmark[DType.int16, insertion_sort[DType.int16]]("Insertion sort", 3000)
+    benchmark[DType.int16, std_sort[DType.int16]]("Std sort", 3000)
+    benchmark[DType.int16, quick_sort[DType.int16]]("Quick sort", 3000)
+    benchmark[DType.int16, radix_sort[DType.int16]]("Radix sort", 3000)
+
+    benchmark[DType.float16, selection_sort[DType.float16]]("Selection sort", 3000)
+    benchmark[DType.float16, insertion_sort[DType.float16]]("Insertion sort", 3000)
+    benchmark[DType.float16, std_sort[DType.float16]]("Std sort", 3000)
+    benchmark[DType.float16, quick_sort[DType.float16]]("Quick sort", 3000)
+    benchmark[DType.float16, radix_sort[DType.float16]]("Radix sort", 3000)
+
+    benchmark[DType.uint32, std_sort[DType.uint32]]("Std sort", 300_000, 2_000_000_000)
+    benchmark[DType.uint32, quick_sort[DType.uint32]]("Quick sort", 300_000, 2_000_000_000)
+    benchmark[DType.uint32, radix_sort[DType.uint32]]("Radix sort", 300_000, 2_000_000_000)
+
+    benchmark[DType.int32, std_sort[DType.int32]]("Std sort", 300_000, 2_000_000_000)
+    benchmark[DType.int32, quick_sort[DType.int32]]("Quick sort", 300_000, 2_000_000_000)
+    benchmark[DType.int32, radix_sort[DType.int32]]("Radix sort", 300_000, 2_000_000_000)
+
+    benchmark[DType.float32, std_sort[DType.float32]]("Std sort", 300_000, 2_000_000_000)
+    benchmark[DType.float32, quick_sort[DType.float32]]("Quick sort", 300_000, 2_000_000_000)
+    benchmark[DType.float32, radix_sort[DType.float32]]("Radix sort", 300_000, 2_000_000_000)
+
+    benchmark[DType.uint64, std_sort[DType.uint64]]("Std sort", 3_000_000, 200_000_000_000)
+    benchmark[DType.uint64, quick_sort[DType.uint64]]("Quick sort", 3_000_000, 200_000_000_000)
+    benchmark[DType.uint64, radix_sort[DType.uint64]]("Radix sort", 3_000_000, 200_000_000_000)
+
+    benchmark[DType.int64, std_sort[DType.int64]]("Std sort", 3_000_000, 200_000_000_000)
+    benchmark[DType.int64, quick_sort[DType.int64]]("Quick sort", 3_000_000, 200_000_000_000)
+    benchmark[DType.int64, radix_sort[DType.int64]]("Radix sort", 3_000_000, 200_000_000_000)
+
+    benchmark[DType.float64, std_sort[DType.float64]]("Std sort", 3_000_000, 200_000_000_000)
+    benchmark[DType.float64, quick_sort[DType.float64]]("Quick sort", 3_000_000, 200_000_000_000)
+    benchmark[DType.float64, radix_sort[DType.float64]]("Radix sort", 3_000_000, 200_000_000_000)

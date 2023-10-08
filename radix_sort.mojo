@@ -1,5 +1,37 @@
 from memory import memset_zero, memcpy, stack_allocation
+from memory.unsafe import bitcast
 from vec import print_v, print_iv
+
+alias last_bit_8 = 1 << 7
+alias last_bit_16 = 1 << 15
+alias last_bit_32 = 1 << 31
+alias last_bit_64 = 1 << 63
+
+@always_inline
+fn _get_index[D: DType, place: Int](vector: DynamicVector[SIMD[D, 1]], v_index: Int) -> Int:
+    @parameter
+    if D == DType.int8:
+        return ((bitcast[DType.uint8, 1](vector[v_index]) ^ last_bit_8) >> place).to_int() & 255
+    elif D == DType.int16:
+        return ((bitcast[DType.uint16, 1](vector[v_index]) ^ last_bit_16) >> place).to_int() & 255
+    elif D == DType.float16:
+        let f = bitcast[DType.uint16, 1](vector[v_index])
+        let mask = bitcast[DType.uint16, 1](-bitcast[DType.int16, 1](f >> 15) | last_bit_16)
+        return ((f ^ mask) >> place).to_int() & 255
+    elif D == DType.int32:
+        return ((bitcast[DType.uint32, 1](vector[v_index]) ^ last_bit_32) >> place).to_int() & 255
+    elif D == DType.float32:
+        let f = bitcast[DType.uint32, 1](vector[v_index])
+        let mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | last_bit_32)
+        return ((f ^ mask) >> place).to_int() & 255
+    elif D == DType.int64:
+        return ((bitcast[DType.uint64, 1](vector[v_index]) ^ last_bit_64) >> place).to_int() & 255
+    elif D == DType.float64:
+        let f = bitcast[DType.uint64, 1](vector[v_index])
+        let mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | last_bit_64)
+        return ((f ^ mask) >> place).to_int() & 255
+    else:
+        return (vector[v_index] >> place).to_int() & 255
 
 @always_inline
 fn _counting_sort[D: DType, place: Int](inout vector: DynamicVector[SIMD[D, 1]]):
@@ -10,17 +42,17 @@ fn _counting_sort[D: DType, place: Int](inout vector: DynamicVector[SIMD[D, 1]])
 
     let counts = stack_allocation[256, DType.uint64]()
     memset_zero(counts, 256)
-
+    
     for i in range(size):
-        let index = (vector[i] >> place).to_int()
-        counts.offset(index & 255).store(counts.offset(index & 255).load() + 1)
+        let index = _get_index[D, place](vector, i)
+        counts.offset(index).store(counts.offset(index).load() + 1)
     
     for i in range(1, 256):
         counts.offset(i).store(counts.offset(i).load() + counts.offset(i - 1).load())
 
     var i = size - 1
     while i >= 0:
-        let index = (vector[i] >> place).to_int() & 255
+        let index = _get_index[D, place](vector, i)
         output[(counts.offset(index).load() - 1).to_int()] = vector[i]
         counts.offset(index).store(counts.offset(index).load() - 1)
         i -= 1
@@ -64,3 +96,45 @@ fn main():
 
     radix_sort[DType.uint32](v1)
     print_v[DType.uint32](v1)
+
+    var v2 = DynamicVector[Int8]()
+    v2.push_back(0)
+    v2.push_back(-23)
+    v2.push_back(123)
+    v2.push_back(-48)
+    print_v[DType.int8](v2)
+
+    radix_sort[DType.int8](v2)
+    print_v[DType.int8](v2)
+
+    var v3 = DynamicVector[Float32]()
+    v3.push_back(0)
+    v3.push_back(-23)
+    v3.push_back(123)
+    v3.push_back(-48)
+    v3.push_back(-48.1)
+    v3.push_back(48.111)
+    v3.push_back(48.101)
+    v3.push_back(48.10111)
+    v3.push_back(-0.10111)
+    v3.push_back(0.10111)
+    print_v[DType.float32](v3)
+
+    radix_sort[DType.float32](v3)
+    print_v[DType.float32](v3)
+
+    var v4 = DynamicVector[Float64]()
+    v4.push_back(0)
+    v4.push_back(-23)
+    v4.push_back(123)
+    v4.push_back(-48)
+    v4.push_back(-48.1)
+    v4.push_back(48.111)
+    v4.push_back(48.101)
+    v4.push_back(48.10111)
+    v4.push_back(-0.10111)
+    v4.push_back(0.10111)
+    print_v[DType.float64](v4)
+
+    radix_sort[DType.float64](v4)
+    print_v[DType.float64](v4)
