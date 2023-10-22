@@ -1,69 +1,72 @@
 Operation              ,size    ,max_value    ,duration  ,avg duration ,sorted
-Selection sort uint8   ,      5 ,        3000 ,       20 ,           4 ,     1
-Insertion sort uint8   ,      5 ,        3000 ,       16 ,           3 ,     1
-Std sort uint8         ,      5 ,        3000 ,       31 ,           6 ,     1
-Quick sort uint8       ,      5 ,        3000 ,       22 ,           4 ,     1
-Counting sort uint8    ,      5 ,        3000 ,      169 ,          33 ,     1
-Radix sort uint8       ,      5 ,        3000 ,      143 ,          28 ,     1
-Selection sort uint8   ,     20 ,        3000 ,      137 ,           6 ,     1
-Insertion sort uint8   ,     20 ,        3000 ,       49 ,           2 ,     1
-Std sort uint8         ,     20 ,        3000 ,       88 ,           4 ,     1
-Quick sort uint8       ,     20 ,        3000 ,       71 ,           3 ,     1
-Counting sort uint8    ,     20 ,        3000 ,      221 ,          11 ,     1
-Radix sort uint8       ,     20 ,        3000 ,       74 ,           3 ,     1
-Selection sort uint8   ,     50 ,        3000 ,      864 ,          17 ,     1
-Insertion sort uint8   ,     50 ,        3000 ,      180 ,           3 ,     1
-Std sort uint8         ,     50 ,        3000 ,      294 ,           5 ,     1
-Quick sort uint8       ,     50 ,        3000 ,      194 ,           3 ,     1
-Counting sort uint8    ,     50 ,        3000 ,      264 ,           5 ,     1
-Radix sort uint8       ,     50 ,        3000 ,       97 ,           1 ,     1
-Selection sort uint8   ,    300 ,        3000 ,    31203 ,         104 ,     1
-Insertion sort uint8   ,    300 ,        3000 ,     9956 ,          33 ,     1
-Std sort uint8         ,    300 ,        3000 ,     2656 ,           8 ,     1
-Quick sort uint8       ,    300 ,        3000 ,     2754 ,           9 ,     1
-Counting sort uint8    ,    300 ,        3000 ,      796 ,           2 ,     1
-Radix sort uint8       ,    300 ,        3000 ,      442 ,           1 ,     1
-Selection sort int8    ,    300 ,        3000 ,    31155 ,         103 ,     1
-Insertion sort int8    ,    300 ,        3000 ,     9716 ,          32 ,     1
-Std sort int8          ,    300 ,        3000 ,     1946 ,           6 ,     0
-Quick sort int8        ,    300 ,        3000 ,     1865 ,           6 ,     1
-Radix sort int8        ,    300 ,        3000 ,      471 ,           1 ,     1
-Selection sort uint16  ,   3000 ,        3000 ,  2295064 ,         765 ,     1
-Insertion sort uint16  ,   3000 ,        3000 ,   841119 ,         280 ,     1
-Std sort uint16        ,   3000 ,        3000 ,    74516 ,          24 ,     0
-Quick sort uint16      ,   3000 ,        3000 ,    92375 ,          30 ,     1
-Counting sort uint16   ,   3000 ,        3000 ,     6455 ,           2 ,     1
-Radix sort uint16      ,   3000 ,        3000 ,     5588 ,           1 ,     1
-Selection sort int16   ,   3000 ,        3000 ,  2297493 ,         765 ,     1
-Insertion sort int16   ,   3000 ,        3000 ,   729372 ,         243 ,     1
-Std sort int16         ,   3000 ,        3000 ,    83415 ,          27 ,     0
-Quick sort int16       ,   3000 ,        3000 ,    93208 ,          31 ,     1
-Radix sort int16       ,   3000 ,        3000 ,     5901 ,           1 ,     1
-Selection sort float16 ,   3000 ,        3000 ,  3972280 ,        1324 ,     1
-Insertion sort float16 ,   3000 ,        3000 ,  2750069 ,         916 ,     1
-Std sort float16       ,   3000 ,        3000 ,   150267 ,          50 ,     0
-Quick sort float16     ,   3000 ,        3000 ,   130395 ,          43 ,     1
-Radix sort float16     ,   3000 ,        3000 ,     9098 ,           3 ,     1
-Std sort uint32        , 300000 ,  2000000000 , 15264689 ,          50 ,     1
-Quick sort uint32      , 300000 ,  2000000000 , 15824707 ,          52 ,     1
-Radix sort uint32      , 300000 ,  2000000000 ,  3282768 ,          10 ,     1
-Std sort int32         , 300000 ,  2000000000 , 15432538 ,          51 ,     1
-Quick sort int32       , 300000 ,  2000000000 , 15526715 ,          51 ,     1
-Radix sort int32       , 300000 ,  2000000000 ,  3252721 ,          10 ,     1
-Std sort float32       ,5000000 ,  2000000000 ,346653798 ,          69 ,     0
-Quick sort float32     ,5000000 ,  2000000000 ,352634490 ,          70 ,     1
-Radix sort float32     ,5000000 ,  2000000000 , 71198837 ,          14 ,     1
-Radix sort 11 float32  ,5000000 ,  2000000000 , 50720316 ,          10 ,     1
-Std sort uint64        ,3000000 ,200000000000 ,184309855 ,          61 ,     1
-Quick sort uint64      ,3000000 ,200000000000 ,188642787 ,          62 ,     1
-Radix sort uint64      ,3000000 ,200000000000 ,136548095 ,          45 ,     1
-Std sort int64         ,3000000 ,200000000000 ,184891584 ,          61 ,     1
-Quick sort int64       ,3000000 ,200000000000 ,183745554 ,          61 ,     1
-Radix sort int64       ,3000000 ,200000000000 ,136395822 ,          45 ,     1
-Std sort float64       ,3000000 ,200000000000 ,198390001 ,          66 ,     1
-Quick sort float64     ,3000000 ,200000000000 ,202234925 ,          67 ,     1
-Radix sort float64     ,3000000 ,200000000000 ,139708844 ,          46 ,     1
-Radix sort 13 float64  ,3000000 ,200000000000 , 73273639 ,          24 ,     1
-Std sort uint64        ,    300 ,         200 ,     1746 ,           5 ,     1
-Quick sort uint64      ,    300 ,         200 ,     2247 ,           7 ,     1
-Radix sort uint64      ,    300 ,         200 ,     8430 ,          28 ,     1
+Selection sort uint8   ,      5 ,        3000 ,       19 ,           3 ,     1
+Insertion sort uint8   ,      5 ,        3000 ,       18 ,           3 ,     1
+Std sort uint8         ,      5 ,        3000 ,       37 ,           7 ,     1
+Quick sort uint8       ,      5 ,        3000 ,       24 ,           4 ,     1
+Counting sort uint8    ,      5 ,        3000 ,      184 ,          36 ,     1
+Radix sort uint8       ,      5 ,        3000 ,      162 ,          32 ,     1
+Selection sort uint8   ,     20 ,        3000 ,      117 ,           5 ,     1
+Insertion sort uint8   ,     20 ,        3000 ,       70 ,           3 ,     1
+Std sort uint8         ,     20 ,        3000 ,       93 ,           4 ,     1
+Quick sort uint8       ,     20 ,        3000 ,       81 ,           4 ,     1
+Counting sort uint8    ,     20 ,        3000 ,      250 ,          12 ,     1
+Radix sort uint8       ,     20 ,        3000 ,       88 ,           4 ,     1
+Selection sort uint8   ,     50 ,        3000 ,      665 ,          13 ,     1
+Insertion sort uint8   ,     50 ,        3000 ,      211 ,           4 ,     1
+Std sort uint8         ,     50 ,        3000 ,      280 ,           5 ,     1
+Quick sort uint8       ,     50 ,        3000 ,      215 ,           4 ,     1
+Counting sort uint8    ,     50 ,        3000 ,      280 ,           5 ,     1
+Radix sort uint8       ,     50 ,        3000 ,      108 ,           2 ,     1
+Selection sort uint8   ,    300 ,        3000 ,    27753 ,          92 ,     1
+Insertion sort uint8   ,    300 ,        3000 ,     9889 ,          32 ,     1
+Std sort uint8         ,    300 ,        3000 ,     1727 ,           5 ,     1
+Quick sort uint8       ,    300 ,        3000 ,     1934 ,           6 ,     1
+Counting sort uint8    ,    300 ,        3000 ,      753 ,           2 ,     1
+Radix sort uint8       ,    300 ,        3000 ,      433 ,           1 ,     1
+Selection sort int8    ,    300 ,        3000 ,    27927 ,          93 ,     1
+Insertion sort int8    ,    300 ,        3000 ,    11364 ,          37 ,     1
+Std sort int8          ,    300 ,        3000 ,     2085 ,           6 ,     0
+Quick sort int8        ,    300 ,        3000 ,     2234 ,           7 ,     1
+Radix sort int8        ,    300 ,        3000 ,      522 ,           1 ,     1
+Selection sort uint16  ,   3000 ,        3000 ,  2298843 ,         766 ,     1
+Insertion sort uint16  ,   3000 ,        3000 ,   722401 ,         240 ,     1
+Std sort uint16        ,   3000 ,        3000 ,    74551 ,          24 ,     0
+Quick sort uint16      ,   3000 ,        3000 ,    99323 ,          33 ,     1
+Counting sort uint16   ,   3000 ,        3000 ,     6272 ,           2 ,     1
+Radix sort uint16      ,   3000 ,        3000 ,     5827 ,           1 ,     1
+Selection sort int16   ,   3000 ,        3000 ,  2287136 ,         762 ,     1
+Insertion sort int16   ,   3000 ,        3000 ,   729238 ,         243 ,     1
+Std sort int16         ,   3000 ,        3000 ,    76444 ,          25 ,     0
+Quick sort int16       ,   3000 ,        3000 ,    91907 ,          30 ,     1
+Radix sort int16       ,   3000 ,        3000 ,     5707 ,           1 ,     1
+Selection sort float16 ,   3000 ,        3000 ,  3972259 ,        1324 ,     1
+Insertion sort float16 ,   3000 ,        3000 ,  2751719 ,         917 ,     1
+Std sort float16       ,   3000 ,        3000 ,   149662 ,          49 ,     0
+Quick sort float16     ,   3000 ,        3000 ,   130185 ,          43 ,     1
+Radix sort float16     ,   3000 ,        3000 ,     9054 ,           3 ,     1
+Std sort uint32        , 300000 ,  2000000000 , 15280286 ,          50 ,     1
+Quick sort uint32      , 300000 ,  2000000000 , 15880893 ,          52 ,     1
+Radix sort uint32      , 300000 ,  2000000000 ,  3283042 ,          10 ,     1
+Std sort int32         , 300000 ,  2000000000 , 15167331 ,          50 ,     1
+Quick sort int32       , 300000 ,  2000000000 , 15438347 ,          51 ,     1
+Radix sort int32       , 300000 ,  2000000000 ,  3289247 ,          10 ,     1
+Std sort float32       ,5000000 ,  2000000000 ,340227840 ,          68 ,     0
+Quick sort float32     ,5000000 ,  2000000000 ,352046417 ,          70 ,     1
+Radix sort float32     ,5000000 ,  2000000000 , 71509914 ,          14 ,     1
+Radix sort 11 float32  ,5000000 ,  2000000000 , 50495014 ,          10 ,     1
+Std sort uint64        ,3000000 ,200000000000 ,184340972 ,          61 ,     1
+Quick sort uint64      ,3000000 ,200000000000 ,187887304 ,          62 ,     1
+Radix sort uint64      ,3000000 ,200000000000 ,136812861 ,          45 ,     1
+Std sort int64         ,3000000 ,200000000000 ,184968508 ,          61 ,     1
+Quick sort int64       ,3000000 ,200000000000 ,183343354 ,          61 ,     1
+Radix sort int64       ,3000000 ,200000000000 ,136331186 ,          45 ,     1
+Std sort float64       ,3000000 ,200000000000 ,208143928 ,          69 ,     1
+Quick sort float64     ,3000000 ,200000000000 ,202486371 ,          67 ,     1
+Radix sort float64     ,3000000 ,200000000000 ,140555314 ,          46 ,     1
+Radix sort 13 float64  ,3000000 ,200000000000 , 73225455 ,          24 ,     1
+Radix sort 16 float64  ,3000000 ,200000000000 ,114270384 ,          38 ,     1
+Std sort float64       ,    300 ,         200 ,     2514 ,           8 ,     1
+Quick sort float64     ,    300 ,         200 ,     2212 ,           7 ,     1
+Radix sort float64     ,    300 ,         200 ,     5619 ,          18 ,     1
+Radix sort 13 float64  ,    300 ,         200 ,    19628 ,          65 ,     1
+Radix sort 16 float64  ,    300 ,         200 ,   101598 ,         338 ,     1

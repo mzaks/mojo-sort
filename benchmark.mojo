@@ -9,6 +9,7 @@ from quick_sort import quick_sort
 from radix_sort import radix_sort
 from radix_sort11 import radix_sort11
 from radix_sort13 import radix_sort13
+from radix_sort16 import radix_sort16
 from selection_sort import selection_sort
 from insertion_sort import insertion_sort
 from counting_sort import counting_sort
@@ -132,7 +133,10 @@ fn main():
     benchmark[DType.float64, quick_sort[DType.float64]]("Quick sort", 3_000_000, 200_000_000_000)
     benchmark[DType.float64, radix_sort[DType.float64]]("Radix sort", 3_000_000, 200_000_000_000)
     benchmark[DType.float64, radix_sort13]("Radix sort 13", 3_000_000, 200_000_000_000)
+    benchmark[DType.float64, radix_sort16]("Radix sort 16", 3_000_000, 200_000_000_000)
 
-    benchmark[DType.uint64, std_sort[DType.uint64]]("Std sort", 300, 200)
-    benchmark[DType.uint64, quick_sort[DType.uint64]]("Quick sort", 300, 200)
-    benchmark[DType.uint64, radix_sort[DType.uint64]]("Radix sort", 300, 200)
+    benchmark[DType.float64, std_sort[DType.float64]]("Std sort", 300, 200)
+    benchmark[DType.float64, quick_sort[DType.float64]]("Quick sort", 300, 200)
+    benchmark[DType.float64, radix_sort[DType.float64]]("Radix sort", 300, 200)
+    benchmark[DType.float64, radix_sort13]("Radix sort 13", 300, 200)
+    benchmark[DType.float64, radix_sort16]("Radix sort 16", 300, 200)
