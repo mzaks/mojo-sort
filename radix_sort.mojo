@@ -1,5 +1,7 @@
+from algorithm import unroll
 from memory import memset_zero, memcpy, stack_allocation
 from memory.unsafe import bitcast
+from math.limit import max_or_inf
 from vec import print_v, print_iv
 
 alias last_bit_8 = 1 << 7
@@ -34,13 +36,13 @@ fn _get_index[D: DType, place: Int](vector: DynamicVector[SIMD[D, 1]], v_index: 
         return (vector[v_index] >> place).to_int() & 255
 
 @always_inline
-fn _counting_sort[D: DType, place: Int](inout vector: DynamicVector[SIMD[D, 1]]):
+fn _counting_sort[D: DType, CD:DType, place: Int](inout vector: DynamicVector[SIMD[D, 1]]):
     let size = len(vector)
     var output = DynamicVector[SIMD[D, 1]](size)
     memset_zero(output.data, size)
     output.resize(size)
 
-    let counts = stack_allocation[256, DType.uint32]()
+    let counts = stack_allocation[256, CD]()
     memset_zero(counts, 256)
     
     for i in range(size):
@@ -75,27 +77,40 @@ fn _counting_sort[D: DType, place: Int](inout vector: DynamicVector[SIMD[D, 1]])
     memcpy(vector.data, output.data, size)
 
 @always_inline
-fn radix_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
+fn _radix_sort[D: DType, CD: DType](inout vector: DynamicVector[SIMD[D, 1]]):
+
+    @parameter
+    fn call_counting_sort[index: Int]():
+        _counting_sort[D, CD, index * 8](vector)
+    
     @parameter
     if D.bitwidth() == 8:
-        _counting_sort[D, 0](vector)
+        unroll[1, call_counting_sort]()
     elif D.bitwidth() == 16:
-        _counting_sort[D, 0](vector)
-        _counting_sort[D, 8](vector)
+        unroll[2, call_counting_sort]()
     elif D.bitwidth() == 32:
-        _counting_sort[D, 0](vector)
-        _counting_sort[D, 8](vector)
-        _counting_sort[D, 16](vector)
-        _counting_sort[D, 24](vector)
+        unroll[4, call_counting_sort]()
     else:
-        _counting_sort[D, 0](vector)
-        _counting_sort[D, 8](vector)
-        _counting_sort[D, 16](vector)
-        _counting_sort[D, 24](vector)
-        _counting_sort[D, 32](vector)
-        _counting_sort[D, 40](vector)
-        _counting_sort[D, 48](vector)
-        _counting_sort[D, 56](vector)
+        unroll[8, call_counting_sort]()
+
+@always_inline
+fn radix_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
+    _radix_sort[D, DType.uint32](vector)
+
+    # NOTE: I hoped that the code below would make the algorithm faster but it made it slower
+    # let size = len(vector)
+    # alias m8 = max_or_inf[DType.uint8]().to_int()
+    # alias m16 = max_or_inf[DType.uint16]().to_int()
+    # alias m32 = max_or_inf[DType.uint32]().to_int()
+
+    # if size <= m16:
+    #     if size > m8:
+    #         return _radix_sort[D, DType.uint16](vector)
+    #     return _radix_sort[D, DType.uint8](vector)
+    # if size <= m32:
+    #     return _radix_sort[D, DType.uint32](vector)
+    # return _radix_sort[D, DType.uint64](vector)
+
 
 fn main():
     var v1 = DynamicVector[UInt32]()
