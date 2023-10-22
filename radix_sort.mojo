@@ -40,15 +40,30 @@ fn _counting_sort[D: DType, place: Int](inout vector: DynamicVector[SIMD[D, 1]])
     memset_zero(output.data, size)
     output.resize(size)
 
-    let counts = stack_allocation[256, DType.uint64]()
+    let counts = stack_allocation[256, DType.uint32]()
     memset_zero(counts, 256)
     
     for i in range(size):
         let index = _get_index[D, place](vector, i)
         counts.offset(index).store(counts.offset(index).load() + 1)
     
-    for i in range(1, 256):
-        counts.offset(i).store(counts.offset(i).load() + counts.offset(i - 1).load())
+    # var count = counts.offset(0).load()
+    # for i in range(1, 256):
+    #     count += counts.offset(i).load()
+    #     counts.offset(i).store(count)
+    
+    var s: UInt32 = 0
+    for i in range(0, 256, 64):
+        var part = counts.offset(i).simd_load[64]()
+        part += part.shift_right[1]()
+        part += part.shift_right[2]()
+        part += part.shift_right[4]()
+        part += part.shift_right[8]()
+        part += part.shift_right[16]()
+        part += part.shift_right[32]()
+        part += s
+        s = part[63]
+        counts.simd_store(i, part)
 
     var i = size - 1
     while i >= 0:
