@@ -51,19 +51,19 @@ fn _counting_sort[D: DType, place: Int](inout vector: DynamicVector[SIMD[D, 1]])
     # for i in range(1, 256):
     #     count += counts.offset(i).load()
     #     counts.offset(i).store(count)
-    
-    var s: UInt32 = 0
-    for i in range(0, 256, 64):
-        var part = counts.offset(i).simd_load[64]()
-        part += part.shift_right[1]()
-        part += part.shift_right[2]()
-        part += part.shift_right[4]()
-        part += part.shift_right[8]()
-        part += part.shift_right[16]()
-        part += part.shift_right[32]()
-        part += s
-        s = part[63]
-        counts.simd_store(i, part)
+
+    var part = counts.simd_load[256]()
+    part += part.shift_right[1]()
+    part += part.shift_right[2]()
+    part += part.shift_right[4]()
+    part += part.shift_right[8]()
+    part += part.shift_right[16]()
+    part += part.shift_right[32]()
+    part += part.shift_right[64]()
+    part += part.shift_right[128]()
+
+    counts.simd_store(part)
+        
 
     var i = size - 1
     while i >= 0:
