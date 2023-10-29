@@ -1,5 +1,5 @@
+
 from memory import memset_zero, memcpy
-from vec import print_v, print_iv
 
 fn counting_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
     let size = len(vector)
@@ -27,19 +27,3 @@ fn counting_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
         i -= 1
     
     memcpy(vector.data, output.data, size)
-
-
-fn main():
-    var v1 = DynamicVector[UInt32]()
-    v1.push_back(13)
-    v1.push_back(31)
-    v1.push_back(1)
-    v1.push_back(7)
-    v1.push_back(7)
-    v1.push_back(4513)
-    v1.push_back(45)
-
-    print_v[DType.uint32](v1)
-
-    counting_sort[DType.uint32](v1)
-    print_v[DType.uint32](v1)

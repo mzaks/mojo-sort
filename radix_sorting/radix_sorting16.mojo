@@ -1,6 +1,6 @@
+
 from memory import memset_zero, memcpy, stack_allocation
 from memory.unsafe import bitcast
-from vec import print_v
 from sys.intrinsics import PrefetchOptions
 
 @always_inline
@@ -141,20 +141,3 @@ fn radix_sort16(inout vector: DynamicVector[Float64]):
         array[index.to_int()] = _inverse_float_flip(si)
 
     sorted.data.free()
-
-fn main():
-    var v3 = DynamicVector[Float64]()
-    v3.push_back(0)
-    v3.push_back(-23)
-    v3.push_back(123)
-    v3.push_back(-48)
-    v3.push_back(-48.1)
-    v3.push_back(48.111)
-    v3.push_back(48.101)
-    v3.push_back(48.10111)
-    v3.push_back(-0.10111)
-    v3.push_back(0.10111)
-    print_v[DType.float64](v3)
-
-    radix_sort16(v3)
-    print_v[DType.float64](v3)

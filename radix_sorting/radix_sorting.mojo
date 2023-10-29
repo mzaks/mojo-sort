@@ -1,8 +1,9 @@
+
 from algorithm import unroll
 from memory import memset_zero, memcpy, stack_allocation
 from memory.unsafe import bitcast
 from math.limit import max_or_inf
-from vec import print_v, print_iv
+
 
 alias last_bit_8 = 1 << 7
 alias last_bit_16 = 1 << 15
@@ -112,59 +113,3 @@ fn radix_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
     # return _radix_sort[D, DType.uint64](vector)
 
 
-fn main():
-    var v1 = DynamicVector[UInt32]()
-    v1.push_back(13)
-    v1.push_back(31)
-    v1.push_back(1)
-    v1.push_back(7)
-    v1.push_back(7)
-    v1.push_back(4513)
-    v1.push_back(45)
-
-    print_v[DType.uint32](v1)
-
-    radix_sort[DType.uint32](v1)
-    print_v[DType.uint32](v1)
-
-    var v2 = DynamicVector[Int8]()
-    v2.push_back(0)
-    v2.push_back(-23)
-    v2.push_back(123)
-    v2.push_back(-48)
-    print_v[DType.int8](v2)
-
-    radix_sort[DType.int8](v2)
-    print_v[DType.int8](v2)
-
-    var v3 = DynamicVector[Float32]()
-    v3.push_back(0)
-    v3.push_back(-23)
-    v3.push_back(123)
-    v3.push_back(-48)
-    v3.push_back(-48.1)
-    v3.push_back(48.111)
-    v3.push_back(48.101)
-    v3.push_back(48.10111)
-    v3.push_back(-0.10111)
-    v3.push_back(0.10111)
-    print_v[DType.float32](v3)
-
-    radix_sort[DType.float32](v3)
-    print_v[DType.float32](v3)
-
-    var v4 = DynamicVector[Float64]()
-    v4.push_back(0)
-    v4.push_back(-23)
-    v4.push_back(123)
-    v4.push_back(-48)
-    v4.push_back(-48.1)
-    v4.push_back(48.111)
-    v4.push_back(48.101)
-    v4.push_back(48.10111)
-    v4.push_back(-0.10111)
-    v4.push_back(0.10111)
-    print_v[DType.float64](v4)
-
-    radix_sort[DType.float64](v4)
-    print_v[DType.float64](v4)

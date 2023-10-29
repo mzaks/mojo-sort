@@ -2,17 +2,14 @@ from random import random_ui64, random_si64, random_float64
 from math import min
 from math.limit import max_or_inf
 from memory.unsafe import bitcast
-from vec import print_v
+from my_utils import print_v
 from time import now
 from algorithm.sort import sort
-from quick_sort import quick_sort
-from radix_sort import radix_sort
-from radix_sort11 import radix_sort11
-from radix_sort13 import radix_sort13
-from radix_sort16 import radix_sort16
+from quick_sorting import quick_sort
+from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16
 from selection_sort import selection_sort
 from insertion_sort import insertion_sort
-from counting_sort import counting_sort
+from count_sort import counting_sort
 
 fn random_vec[D: DType](size: Int, max: Int = 3000) -> DynamicVector[SIMD[D, 1]]:
     var result = DynamicVector[SIMD[D, 1]](size)

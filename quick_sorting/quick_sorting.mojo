@@ -1,4 +1,3 @@
-from vec import print_v
 
 fn _partition[D: DType](inout vector: DynamicVector[SIMD[D, 1]], low: Int, high: Int) -> Int:
     let pivot = vector[high]
@@ -18,19 +17,3 @@ fn _quick_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]], low: Int, high
 
 fn quick_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
     _quick_sort[D](vector, 0, len(vector) - 1)
-
-
-fn main():
-    var v1 = DynamicVector[UInt32]()
-    v1.push_back(13)
-    v1.push_back(31)
-    v1.push_back(1)
-    v1.push_back(7)
-    v1.push_back(7)
-    v1.push_back(4513)
-    v1.push_back(45)
-
-    print_v[DType.uint32](v1)
-
-    quick_sort[DType.uint32](v1)
-    print_v[DType.uint32](v1)
