@@ -1,5 +1,8 @@
-from my_utils import print_v
+from my_utils import print_v, vector
 from insertion_sort import insertion_sort
+from string_compare import lt, lt2, lt3
+from hash_utils import corpus4, corpus7
+from time import now
 
 
 fn main():
@@ -17,5 +20,21 @@ fn main():
     insertion_sort[DType.uint32](v1)
     print_v[DType.uint32](v1)
 
+    var v2 = vector("d", "a", "bb", "ab", "dfg", "efgds")
+    print_v(v2)
+    insertion_sort[StringLiteral, lt](v2)
+    print_v(v2)
 
+    var corpus = corpus7()
+    var tik = now()
+    insertion_sort[StringLiteral, lt3](corpus)
+    var tok = now()
+    print_v(corpus)
+    print(tok - tik)
 
+    corpus = corpus4()
+    tik = now()
+    insertion_sort[StringLiteral, lt3](corpus)
+    tok = now()
+    print_v(corpus)
+    print(tok - tik)
