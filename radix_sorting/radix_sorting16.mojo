@@ -5,71 +5,72 @@ from sys.intrinsics import PrefetchOptions
 
 @always_inline
 fn _float_flip(f: UInt64) -> UInt64:
-    let mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
+    var mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
     return f ^ mask
 
 @always_inline
 fn _float_flip_x(inout f: UInt64):
-    let mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
+    var mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
     f ^= mask
 
 @always_inline
 fn _inverse_float_flip(f: UInt64) -> UInt64:
-    let mask = ((f >> 63) - 1) | 0x80_00_00_00_00_00_00_00
+    var mask = ((f >> 63) - 1) | 0x80_00_00_00_00_00_00_00
     return f ^ mask
 
 @always_inline
 fn _0(v: UInt64) -> Int:
-    return (v & 0xff_ff).to_int()
+    return int(v & 0xff_ff)
 
 @always_inline
 fn _1(v: UInt64) -> Int:
-    return (v >> 16 & 0xff_ff).to_int()
+    return int(v >> 16 & 0xff_ff)
 
 @always_inline
 fn _2(v: UInt64) -> Int:
-    return (v >> 32 & 0xff_ff).to_int()
+    return int(v >> 32 & 0xff_ff)
 
 @always_inline
 fn _3(v: UInt64) -> Int:
-    return (v >> 48 & 0xff_ff).to_int()
+    return int(v >> 48 & 0xff_ff)
 
 # based on http://stereopsis.com/radix.html
-fn radix_sort16(inout vector: DynamicVector[Float64]):
-    let elements = len(vector)
-    let array = Buffer[Dim(1), DType.uint64](DTypePointer[DType.uint64](vector.data.bitcast[UInt64]()), elements)
-    let sorted = Buffer[Dim(1), DType.uint64](DTypePointer[DType.uint64].aligned_alloc(4, elements))
+fn radix_sort16(inout vector: List[Float64]):
+    var elements = len(vector)
+    var array = List[UInt64](capacity=elements)
+    memcpy(array.data, vector.data.bitcast[UInt64](), elements)
+    var sorted = List[UInt64](capacity=elements)
     alias histogram_size = 1 << 16
-    let histogram1 = stack_allocation[histogram_size * 4, DType.uint32]()
+    var histogram1 = stack_allocation[histogram_size * 4, DType.uint32]()
     memset_zero(histogram1, histogram_size * 4)
 
-    let histogram2 = histogram1.offset(histogram_size)
-    let histogram3 = histogram2.offset(histogram_size)
-    let histogram4 = histogram3.offset(histogram_size)
+    var histogram2 = histogram1.offset(histogram_size)
+    var histogram3 = histogram2.offset(histogram_size)
+    var histogram4 = histogram3.offset(histogram_size)
 
     for i in range(elements):
         # TODO: Prefetch
         # array.prefetch[PrefetchOptions().to_data_cache()](i+64)
-        let fi = _float_flip(array[i])
-        let i1 = _0(fi)
-        let i2 = _1(fi)
-        let i3 = _2(fi)
-        let i4 = _3(fi)
+        var fi = _float_flip(array[i])
+        var i1 = _0(fi)
+        var i2 = _1(fi)
+        var i3 = _2(fi)
+        var i4 = _3(fi)
         
-        let p1 = histogram1.offset(i1)
-        let p2 = histogram2.offset(i2)
-        let p3 = histogram3.offset(i3)
-        let p4 = histogram4.offset(i4)
+        var p1 = histogram1.offset(i1)
+        var p2 = histogram2.offset(i2)
+        var p3 = histogram3.offset(i3)
+        var p4 = histogram4.offset(i4)
 
         # SIMD is a bit slower
-        # let fi = _float_flip(array[i])
+        # var fi = _float_flip(array[i])
         # var fiv = SIMD[DType.uint32, 2](fi)
         # fiv >>= SIMD[DType.uint32, 2](0, 11, 22, 0)
         # fiv &= SIMD[DType.uint32, 2](0x7ff, 0x7ff, 0xffff, 0)
 
-        # let p1 = histogram1.offset(fiv[0].to_int())
-        # let p2 = histogram2.offset(fiv[1].to_int())
-        # let p3 = histogram3.offset((fi >> 22).to_int())
+        # var p1 = histogram1.offset(fiv[0].to_int())
+        # var p2 = histogram2.offset(fiv[1].to_int())
+        # var p3 = histogram3.offset((fi >> 22).to_int())
 
         p1.store(p1.load() + 1)
         p2.store(p2.load() + 1)
@@ -86,10 +87,10 @@ fn radix_sort16(inout vector: DynamicVector[Float64]):
     var tsum: UInt32 = 0
 
     for i in range(histogram_size):
-        let p1 = histogram1.offset(i)
-        let p2 = histogram2.offset(i)
-        let p3 = histogram3.offset(i)
-        let p4 = histogram4.offset(i)
+        var p1 = histogram1.offset(i)
+        var p2 = histogram2.offset(i)
+        var p3 = histogram3.offset(i)
+        var p4 = histogram4.offset(i)
 
         tsum = p1.load() + sum1
         p1.store(sum1 - 1)
@@ -111,33 +112,33 @@ fn radix_sort16(inout vector: DynamicVector[Float64]):
         var fi = array[i]
         # print(fi)
         _float_flip_x(fi)
-        let p1 = histogram1.offset(_0(fi))
-        let index = p1.load() + 1
+        var p1 = histogram1.offset(_0(fi))
+        var index = p1.load() + 1
         p1.store(index)
-        sorted[index.to_int()] = fi
+        sorted[int(index)] = fi
 
     for i in range(elements):
-        let si = sorted[i]
-        let pos = _1(si)
-        let p2 = histogram2.offset(pos)
-        let index = p2.load() + 1
+        var si = sorted[i]
+        var pos = _1(si)
+        var p2 = histogram2.offset(pos)
+        var index = p2.load() + 1
         p2.store(index)
-        array[index.to_int()] = si
+        array[int(index)] = si
 
     for i in range(elements):
-        let ai = array[i]
-        let pos = _2(ai)
-        let p3 = histogram3.offset(pos)
-        let index = p3.load() + 1
+        var ai = array[i]
+        var pos = _2(ai)
+        var p3 = histogram3.offset(pos)
+        var index = p3.load() + 1
         p3.store(index)
-        sorted[index.to_int()] = ai
+        sorted[int(index)] = ai
 
     for i in range(elements):
-        let si = sorted[i]
-        let pos = _3(si)
-        let p4 = histogram4.offset(pos)
-        let index = p4.load() + 1
+        var si = sorted[i]
+        var pos = _3(si)
+        var p4 = histogram4.offset(pos)
+        var index = p4.load() + 1
         p4.store(index)
-        array[index.to_int()] = _inverse_float_flip(si)
+        vector[int(index)] = _inverse_float_flip(si)._bits_to_float[DType.float64]()
 
-    sorted.data.free()
+    # sorted.data.free()

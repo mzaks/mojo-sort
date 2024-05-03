@@ -1,5 +1,5 @@
 
-fn selection_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
+fn selection_sort[D: DType](inout vector: List[SIMD[D, 1]]):
     for i in range(len(vector)):
         var min_idx = i
         for j in range(i + 1, len(vector)):

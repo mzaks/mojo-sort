@@ -1,6 +1,4 @@
 from random import random_ui64, random_si64, random_float64
-from math import min
-from math.limit import max_or_inf
 from memory.unsafe import bitcast
 from my_utils import print_v
 from time import now
@@ -11,42 +9,42 @@ from selection_sort import selection_sort
 from insertion_sort import insertion_sort
 from count_sort import counting_sort
 
-fn random_vec[D: DType](size: Int, max: Int = 3000) -> DynamicVector[SIMD[D, 1]]:
-    var result = DynamicVector[SIMD[D, 1]](size)
+fn random_vec[D: DType](size: Int, max: Int = 3000) -> List[SIMD[D, 1]]:
+    var result = List[SIMD[D, 1]](size)
     for _ in range(size):
         @parameter
         if D == DType.int8 or D == DType.int16 or D == DType.int32 or D == DType.int64:
-            result.push_back(random_si64(0, max).cast[D]())
+            result.append(random_si64(0, max).cast[D]())
         elif D == DType.float16 or D == DType.float32 or D == DType.float64:
-            result.push_back(random_float64(0, max).cast[D]())
+            result.append(random_float64(0, max).cast[D]())
         else:
-            result.push_back(random_ui64(0, max).cast[D]())
+            result.append(random_ui64(0, max).cast[D]())
     return result
 
-fn assert_sorted[D: DType](vector: DynamicVector[SIMD[D, 1]]):
+fn assert_sorted[D: DType](vector: List[SIMD[D, 1]]):
     for i in range(1, len(vector)):
         if vector[i] < vector[i - 1]:
             print(", 0")
             return
     print(", 1")
 
-fn benchmark[D: DType, func: fn(inout DynamicVector[SIMD[D, 1]]) -> None](
+fn benchmark[D: DType, func: fn(inout List[SIMD[D, 1]]) -> None](
     name: StringLiteral, size: Int, max: Int = 3000
 ):
-    let v = random_vec[D](size, max)
-    var v1 = v.deepcopy()
-    var min_duration = max_or_inf[DType.int64]()
+    var v = random_vec[D](size, max)
+    var v1 = v
+    var min_duration = Int64.MAX
     for _ in range(10):
-        v1 = v.deepcopy()
-        let tik = now()
+        v1 = v
+        var tik = now()
         func(v1)
-        let tok = now()
+        var tok = now()
         min_duration = min(min_duration, tok - tik)
-    print_no_newline(name, D)
-    print_no_newline(",", size, ",", max, ",", min_duration, ",", min_duration // size)
+    print(name, D, end="")
+    print(",", size, ",", max, ",", min_duration, ",", min_duration // size, end="")
     assert_sorted[D](v1)
 
-fn std_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
+fn std_sort[D: DType](inout vector: List[SIMD[D, 1]]):
     sort[D](vector)
 
 fn main():

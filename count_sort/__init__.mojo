@@ -1,29 +1,28 @@
 
 from memory import memset_zero, memcpy
 
-fn counting_sort[D: DType](inout vector: DynamicVector[SIMD[D, 1]]):
-    let size = len(vector)
-    var output = DynamicVector[SIMD[D, 1]](size)
+fn counting_sort[D: DType](inout vector: List[SIMD[D, 1]]):
+    var size = len(vector)
+    var output = List[SIMD[D, 1]](capacity=size)
     var max_value = 0
     for i in range(size):
         if vector[i] > max_value:
-            max_value = vector[i].to_int()
-        output.push_back(0)
+            max_value = int(vector[i])
+        output.append(0)
 
-    var counts = DynamicVector[Int](max_value + 1)
-    memset_zero(counts.data, max_value + 1)
-    counts.resize(max_value + 1)
+    var counts = List[Int](capacity=max_value + 1)
+    counts.resize(max_value + 1, 0)
 
     for i in range(size):
-        counts[vector[i].to_int()] += 1
+        counts[int(vector[i])] += 1
     
     for i in range(1, len(counts)):
         counts[i] += counts[i - 1]
 
     var i = size - 1
     while i >= 0:
-        output[counts[vector[i].to_int()] - 1] = vector[i]
-        counts[vector[i].to_int()] -= 1
+        output[counts[int(vector[i])] - 1] = vector[i]
+        counts[int(vector[i])] -= 1
         i -= 1
     
-    memcpy(vector.data, output.data, size)
+    vector = output

@@ -2,58 +2,60 @@
 from memory import memset_zero, memcpy, stack_allocation
 from memory.unsafe import bitcast
 from sys.intrinsics import PrefetchOptions
+from buffer import Buffer
 
 @always_inline
 fn _float_flip(f: UInt32) -> UInt32:
-    let mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
+    var mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
     return f ^ mask
 
 @always_inline
 fn _float_flip_x(inout f: UInt32):
-    let mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
+    var mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
     f ^= mask
 
 @always_inline
 fn _inverse_float_flip(f: UInt32) -> UInt32:
-    let mask = ((f >> 31) - 1) | 0x80_00_00_00
+    var mask = ((f >> 31) - 1) | 0x80_00_00_00
     return f ^ mask
 
 @always_inline
 fn _0(v: UInt32) -> Int:
-    return (v & 0x7ff).to_int()
+    return int(v & 0x7ff)
 
 @always_inline
 fn _1(v: UInt32) -> Int:
-    return (v >> 11 & 0x7ff).to_int()
+    return int(v >> 11 & 0x7ff)
 
 @always_inline
 fn _2(v: UInt32) -> Int:
-    return (v >> 22).to_int()
+    return int(v >> 22)
 
 
 # based on http://stereopsis.com/radix.html
-fn radix_sort11(inout vector: DynamicVector[Float32]):
-    let elements = len(vector)
-    let array = Buffer[Dim(1), DType.uint32](DTypePointer[DType.uint32](vector.data.bitcast[UInt32]()), elements)
-    let sorted = Buffer[Dim(1), DType.uint32](DTypePointer[DType.uint32].aligned_alloc(4, elements))
+fn radix_sort11(inout vector: List[Float32]):
+    var elements = len(vector)
+    var array = List[UInt32](capacity=elements)
+    memcpy(array.data, vector.data.bitcast[UInt32](), elements)
+    var sorted = List[UInt32](capacity=elements)
     alias histogram_size = 2048
-    let histogram1 = stack_allocation[histogram_size * 3, DType.uint32]()
+    var histogram1 = stack_allocation[histogram_size * 3, DType.uint32]()
     memset_zero(histogram1, histogram_size * 3)
 
-    let histogram2 = histogram1.offset(histogram_size)
-    let histogram3 = histogram2.offset(histogram_size)
+    var histogram2 = histogram1.offset(histogram_size)
+    var histogram3 = histogram2.offset(histogram_size)
 
     for i in range(elements):
         # TODO: Prefetch
         # array.prefetch[PrefetchOptions().to_data_cache()](i+64)
-        let fi = _float_flip(array[i])
-        let i1 = _0(fi)
-        let i2 = _1(fi)
-        let i3 = _2(fi)
+        var fi = _float_flip(array[i])
+        var i1 = _0(fi)
+        var i2 = _1(fi)
+        var i3 = _2(fi)
         
-        let p1 = histogram1.offset(i1)
-        let p2 = histogram2.offset(i2)
-        let p3 = histogram3.offset(i3)
+        var p1 = histogram1.offset(i1)
+        var p2 = histogram2.offset(i2)
+        var p3 = histogram3.offset(i3)
 
         # SIMD is a bit slower
         # let fi = _float_flip(array[i])
@@ -78,9 +80,9 @@ fn radix_sort11(inout vector: DynamicVector[Float32]):
     var tsum: UInt32 = 0
 
     for i in range(histogram_size):
-        let p1 = histogram1.offset(i)
-        let p2 = histogram2.offset(i)
-        let p3 = histogram3.offset(i)
+        var p1 = histogram1.offset(i)
+        var p2 = histogram2.offset(i)
+        var p3 = histogram3.offset(i)
 
         tsum = p1.load() + sum1
         p1.store(sum1 - 1)
@@ -97,26 +99,27 @@ fn radix_sort11(inout vector: DynamicVector[Float32]):
     for i in range(elements):
         var fi = array[i]
         _float_flip_x(fi)
-        let p1 = histogram1.offset(_0(fi))
-        let index = p1.load() + 1
+        var p1 = histogram1.offset(_0(fi))
+        var index = p1.load() + 1
         p1.store(index)
-        sorted[index.to_int()] = fi
+        sorted[int(index)] = fi
 
     for i in range(elements):
-        let si = sorted[i]
-        let pos = _1(si)
-        let p2 = histogram2.offset(pos)
-        let index = p2.load() + 1
+        var si = sorted[i]
+        var pos = _1(si)
+        var p2 = histogram2.offset(pos)
+        var index = p2.load() + 1
         p2.store(index)
-        array[index.to_int()] = si
+        array[int(index)] = si
 
     for i in range(elements):
-        let ai = array[i]
-        let pos = _2(ai)
-        let p3 = histogram3.offset(pos)
-        let index = p3.load() + 1
+        var ai = array[i]
+        var pos = _2(ai)
+        var p3 = histogram3.offset(pos)
+        var index = p3.load() + 1
         p3.store(index)
-        sorted[index.to_int()] = _inverse_float_flip(ai)
+        vector[int(index)] = _inverse_float_flip(ai)._bits_to_float[DType.float32]()
 
-    memcpy(vector.data, sorted.data.bitcast[DType.float32](), elements)
-    sorted.data.free()
+    
+    # memcpy(vector.data, sorted.data.bitcast[Float32](), elements)
+    # sorted.data.free()
