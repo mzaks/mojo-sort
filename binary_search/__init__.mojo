@@ -29,6 +29,8 @@ fn classic_binary_search[D: AnyType, lt: fn(D, D) -> Bool](b: Pointer[D], n: Int
             return mid
     return -1
 
+# Binary search based on https://en.algorithmica.org/hpc/data-structures/binary-search/
+
 fn binary_search[D: AnyType, lt: fn(D, D) -> Int, eq: fn(D, D) -> Bool](b: Pointer[D], n: Int, x: D) -> Int:
     var cursor = 0
     var length = n
