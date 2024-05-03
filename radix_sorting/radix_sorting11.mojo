@@ -33,7 +33,8 @@ fn _2(v: UInt32) -> Int:
 
 
 # based on http://stereopsis.com/radix.html
-fn radix_sort11(inout vector: List[Float32]):
+fn radix_sort11[D: DType](inout vector: List[SIMD[D, 1]]):
+    constrained[D.sizeof() == 4, "D needs to be 4 bytes wide"]()
     var elements = len(vector)
     var array = List[UInt32](capacity=elements)
     memcpy(array.data, vector.data.bitcast[UInt32](), elements)
@@ -118,7 +119,7 @@ fn radix_sort11(inout vector: List[Float32]):
         var p3 = histogram3.offset(pos)
         var index = p3.load() + 1
         p3.store(index)
-        vector[int(index)] = _inverse_float_flip(ai)._bits_to_float[DType.float32]()
+        vector[int(index)] = _inverse_float_flip(ai)._bits_to_float[D]()
 
     
     # memcpy(vector.data, sorted.data.bitcast[Float32](), elements)

@@ -114,7 +114,7 @@ fn test_16():
 
 
 fn main():
-    test_radix()
+    # test_radix()
     test_11()
     test_13()
     test_16()

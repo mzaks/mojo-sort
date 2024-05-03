@@ -42,7 +42,8 @@ fn _4(v: UInt64) -> Int:
 
 
 # based on http://stereopsis.com/radix.html
-fn radix_sort13(inout vector: List[Float64]):
+fn radix_sort13[D: DType](inout vector: List[SIMD[D, 1]]):
+    constrained[D.sizeof() == 8, "D needs to be 8 bytes wide"]()
     var elements = len(vector)
     var array = List[UInt64](capacity=elements)
     memcpy(array.data, vector.data.bitcast[UInt64](), elements)
@@ -164,7 +165,7 @@ fn radix_sort13(inout vector: List[Float64]):
         var p5 = histogram5.offset(pos)
         var index = p5.load() + 1
         p5.store(index)
-        vector[int(index)] = _inverse_float_flip(ai)._bits_to_float[DType.float64]()
+        vector[int(index)] = _inverse_float_flip(ai)._bits_to_float[D]()
 
     # memcpy(vector.data, sorted.data.bitcast[Float64](), elements)
     # sorted.data.free()
