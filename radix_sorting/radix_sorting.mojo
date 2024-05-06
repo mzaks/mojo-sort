@@ -39,7 +39,7 @@ fn _get_index[D: DType, place: Int](vector: List[SIMD[D, 1]], v_index: Int) -> I
 @always_inline
 fn _counting_sort[D: DType, CD:DType, place: Int](inout vector: List[SIMD[D, 1]]):
     var size = len(vector)
-    var output = List[SIMD[D, 1]](size)
+    var output = List[SIMD[D, 1]](capacity=size)
     memset_zero(output.data, size)
     output.resize(size)
 

@@ -1,5 +1,6 @@
 from my_utils import *
-from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16
+from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16, msb_radix_sort
+from time import now
 
 
 fn test_radix():
@@ -114,7 +115,21 @@ fn test_16():
 
 
 fn main():
-    # test_radix()
+    test_radix()
     test_11()
     test_13()
     test_16()
+
+    var corpus = corpus7()
+    msb_radix_sort(corpus)
+    var tik = now()
+    print_v(corpus)
+    var tok = now()
+    print("Duration", tok - tik)
+
+    corpus = corpus3()
+    msb_radix_sort(corpus)
+    tik = now()
+    print_v(corpus)
+    tok = now()
+    print("Duration", tok - tik)

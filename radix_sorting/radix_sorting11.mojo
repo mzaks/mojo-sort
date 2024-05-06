@@ -4,36 +4,54 @@ from memory.unsafe import bitcast
 from sys.intrinsics import PrefetchOptions
 from buffer import Buffer
 
-@always_inline
-fn _float_flip(f: UInt32) -> UInt32:
-    var mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
-    return f ^ mask
-
-@always_inline
-fn _float_flip_x(inout f: UInt32):
-    var mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
-    f ^= mask
-
-@always_inline
-fn _inverse_float_flip(f: UInt32) -> UInt32:
-    var mask = ((f >> 31) - 1) | 0x80_00_00_00
-    return f ^ mask
-
-@always_inline
-fn _0(v: UInt32) -> Int:
-    return int(v & 0x7ff)
-
-@always_inline
-fn _1(v: UInt32) -> Int:
-    return int(v >> 11 & 0x7ff)
-
-@always_inline
-fn _2(v: UInt32) -> Int:
-    return int(v >> 22)
-
-
 # based on http://stereopsis.com/radix.html
 fn radix_sort11[D: DType](inout vector: List[SIMD[D, 1]]):
+
+    @always_inline
+    fn _float_flip(f: UInt32) -> UInt32:
+        @parameter
+        if D == DType.uint32:
+            return f
+        elif D == DType.int32:
+            return f ^ 0x80_00_00_00
+        else:
+            var mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
+            return f ^ mask
+
+    @always_inline
+    fn _float_flip_x(inout f: UInt32):
+        @parameter
+        if D == DType.uint32:
+            return
+        elif D == DType.int32:
+            f ^= 0x80_00_00_00
+        else:
+            var mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
+            f ^= mask
+
+    @always_inline
+    fn _inverse_float_flip(f: UInt32) -> UInt32:
+        @parameter
+        if D == DType.uint32:
+            return f
+        elif D == DType.int32:
+            return f ^ 0x80_00_00_00
+        else:
+            var mask = ((f >> 31) - 1) | 0x80_00_00_00
+            return f ^ mask
+
+    @always_inline
+    fn _0(v: UInt32) -> Int:
+        return int(v & 0x7ff)
+
+    @always_inline
+    fn _1(v: UInt32) -> Int:
+        return int(v >> 11 & 0x7ff)
+
+    @always_inline
+    fn _2(v: UInt32) -> Int:
+        return int(v >> 22)
+
     constrained[D.sizeof() == 4, "D needs to be 4 bytes wide"]()
     var elements = len(vector)
     var array = List[UInt32](capacity=elements)

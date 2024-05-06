@@ -13,6 +13,15 @@ fn lte_s(a: String, b: String) -> Bool:
     var res = memcmp(a._as_ptr(), b._as_ptr(), min_len)
     return len(a) <= len(b) if res == 0 else res < 0
 
+# @always_inline
+# fn lt(a: String, b: String) -> Bool:
+#     var len1 = len(a)
+#     var len2 = len(b)
+#     if len1 < len2:
+#         return memcmp(a._as_ptr(), b._as_ptr(), len1) <= 0
+#     else:
+#         return memcmp(a._as_ptr(), b._as_ptr(), len2) < 0
+
 fn corpus1() -> List[String]:
     return List[String]('Lorem', 'ipsum', 'dolor', 'sit', 'amet,', 'consectetur', 'adipiscing', 'elit.', 'Quisque', 'orci', 'urna,', 'pretium', 'et', 'porta', 'ac,', 'porttitor', 'sit', 'amet', 'sem.', 'Fusce', 'sagittis', 'lorem', 'neque,', 'vitae', 'sollicitudin', 'elit', 'suscipit', 'et.', 'In', 'interdum', 'convallis', 'nisl', 'in', 'ornare.', 'Vestibulum', 'ante', 'ipsum', 'primis', 'in', 'faucibus', 'orci', 'luctus', 'et', 'ultrices', 'posuere', 'cubilia', 'curae;', 'Aliquam', 'erat', 'volutpat.', 'Morbi', 'mollis', 'iaculis', 'lectus', 'ac', 'tincidunt.', 'Fusce', 'nisi', 'lacus,', 'semper', 'eu', 'dignissim', 'et,', 'malesuada', 'non', 'mi.', 'Sed', 'euismod', 'urna', 'vel', 'elit', 'faucibus,', 'eu', 'bibendum', 'ante', 'fringilla.', 'Curabitur', 'tempus', 'in', 'turpis', 'at', 'mattis.', 'Aliquam', 'erat', 'volutpat.', 'Donec', 'maximus', 'elementum', 'felis,', 'sit', 'amet', 'dignissim', 'augue', 'tincidunt', 'blandit.', 'Aliquam', 'fermentum,', 'est', 'eu', 'mollis.')
 

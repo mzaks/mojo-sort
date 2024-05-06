@@ -1,5 +1,6 @@
 
-from my_utils import print_v, corpus4, corpus7, lte_s
+from my_utils import *
+from string_compare import lt
 from quick_sort import quick_sort
 from time import now
 
@@ -20,14 +21,14 @@ fn main():
 
     var corpus = corpus7()
     var tik = now()
-    quick_sort[String, lte_s](corpus)
+    quick_sort[String, lt](corpus)
     var tok = now()
     print_v(corpus)
     print(tok - tik)
 
-    corpus = corpus4()
+    corpus = corpus3()
     tik = now()
-    quick_sort[String, lte_s](corpus)
+    quick_sort[String, lt](corpus)
     tok = now()
     print_v(corpus)
     print(tok - tik)

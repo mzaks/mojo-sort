@@ -1,4 +1,5 @@
-from my_utils import print_v, corpus4, corpus7, lte_s
+from my_utils import *
+from string_compare import lt
 from insertion_sort import insertion_sort
 from time import now
 
@@ -22,19 +23,19 @@ fn main():
     var v2 = List(str("d"), str("a"), str("bb"), str("ab"), str("dfg"), str("efgds"))
     print_v(v2)
     
-    insertion_sort[String, lte_s](v2)
+    insertion_sort[String, lt](v2)
     print_v(v2)
 
     var corpus = corpus7()
     var tik = now()
-    insertion_sort[String, lte_s](corpus)
+    insertion_sort[String, lt](corpus)
     var tok = now()
     print_v(corpus)
     print(tok - tik)
 
-    corpus = corpus4()
+    corpus = corpus3()
     tik = now()
-    insertion_sort[String, lte_s](corpus)
+    insertion_sort[String, lt](corpus)
     tok = now()
     print_v(corpus)
     print(tok - tik)
