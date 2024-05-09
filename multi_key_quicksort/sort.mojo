@@ -21,7 +21,7 @@ fn _exchange(inout values: List[String], a: Int, b: Int):
 fn _char_at(s: String, index: Int) -> Int:
     if len(s) <= index:
         return 0
-    return int(s._as_ptr().bitcast[DType.uint8]().load(index))
+    return int(s.unsafe_uint8_ptr().load(index))
 
 fn _mk_sort(inout values: List[String], n: Int, depth: Int, offset: Int):
     if n <= 1:

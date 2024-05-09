@@ -63,7 +63,7 @@ fn _memcmp_impl(s1: DTypePointer, s2: __type_of(s1), count: Int) -> Int:
 @always_inline
 fn lt(a: String, b: String) -> Bool:
     var min_len = min(len(a), len(b))
-    var res = _memcmp_impl(a._as_uint8_ptr(), b._as_uint8_ptr(), min_len)
+    var res = memcmp(a.unsafe_uint8_ptr(), b.unsafe_uint8_ptr(), min_len)
     return len(a) <= len(b) if res == 0 else res < 0
 
 
@@ -81,55 +81,55 @@ fn lt(a: String, b: String) -> Bool:
 
 #     return len(a) <= len(b)
 
-fn lt2(a: StringLiteral, b: StringLiteral) -> Bool:
-    """This is much simpler but also slower based on some simple benchmarks."""
-    var min_len = min(len(a), len(b))
-    var res = memcmp(a.data(), b.data(), min_len)
-    return len(a) <= len(b) if res == 0 else res < 0
+# fn lt2(a: StringLiteral, b: StringLiteral) -> Bool:
+#     """This is much simpler but also slower based on some simple benchmarks."""
+#     var min_len = min(len(a), len(b))
+#     var res = memcmp(a.data(), b.data(), min_len)
+#     return len(a) <= len(b) if res == 0 else res < 0
 
-fn lt3(a: StringLiteral, b: StringLiteral) -> Bool:
-    var p1 = a.data().bitcast[DType.uint8]()
-    var p2 = b.data().bitcast[DType.uint8]()
-    var rest_len = min(len(a), len(b))
-    while rest_len >= 8:
-        var ai = bswap(p1.bitcast[DType.uint64]().load())
-        var bi = bswap(p2.bitcast[DType.uint64]().load())
-        if ai > bi:
-            return False
-        if ai < bi:
-            return True
-        p1 = p1.offset(8)
-        p2 = p2.offset(8)
-        rest_len -= 8
+# fn lt3(a: StringLiteral, b: StringLiteral) -> Bool:
+#     var p1 = a.data().bitcast[DType.uint8]()
+#     var p2 = b.data().bitcast[DType.uint8]()
+#     var rest_len = min(len(a), len(b))
+#     while rest_len >= 8:
+#         var ai = bswap(p1.bitcast[DType.uint64]().load())
+#         var bi = bswap(p2.bitcast[DType.uint64]().load())
+#         if ai > bi:
+#             return False
+#         if ai < bi:
+#             return True
+#         p1 = p1.offset(8)
+#         p2 = p2.offset(8)
+#         rest_len -= 8
     
-    if rest_len >= 4:
-        var ai = bswap(p1.bitcast[DType.uint32]().load())
-        var bi = bswap(p2.bitcast[DType.uint32]().load())
-        if ai > bi:
-            return False
-        if ai < bi:
-            return True
-        p1 = p1.offset(4)
-        p2 = p2.offset(4)
-        rest_len -= 4
+#     if rest_len >= 4:
+#         var ai = bswap(p1.bitcast[DType.uint32]().load())
+#         var bi = bswap(p2.bitcast[DType.uint32]().load())
+#         if ai > bi:
+#             return False
+#         if ai < bi:
+#             return True
+#         p1 = p1.offset(4)
+#         p2 = p2.offset(4)
+#         rest_len -= 4
     
-    if rest_len >= 2:
-        var ai = bswap(p1.bitcast[DType.uint16]().load())
-        var bi = bswap(p2.bitcast[DType.uint16]().load())
-        if ai > bi:
-            return False
-        if ai < bi:
-            return True
-        p1 = p1.offset(2)
-        p2 = p2.offset(2)
-        rest_len -= 2
+#     if rest_len >= 2:
+#         var ai = bswap(p1.bitcast[DType.uint16]().load())
+#         var bi = bswap(p2.bitcast[DType.uint16]().load())
+#         if ai > bi:
+#             return False
+#         if ai < bi:
+#             return True
+#         p1 = p1.offset(2)
+#         p2 = p2.offset(2)
+#         rest_len -= 2
 
-    if rest_len == 1:
-        var ai = p1.load()
-        var bi = p2.load()
-        if ai > bi:
-            return False
-        if ai < bi:
-            return True
+#     if rest_len == 1:
+#         var ai = p1.load()
+#         var bi = p2.load()
+#         if ai > bi:
+#             return False
+#         if ai < bi:
+#             return True
 
-    return len(a) <= len(b)
+#     return len(a) <= len(b)
