@@ -6,12 +6,12 @@ fn print_v[T: StringableCollectionElement](values: List[T]):
         print(v[], end="|")
     print()
 
-fn lte_s(a: String, b: String) -> Bool:
-    var l1 = len(a)
-    var l2 = len(b)
-    var min_len = l1 if l1 <= l2 else l2
-    var res = memcmp(a._as_ptr(), b._as_ptr(), min_len)
-    return len(a) <= len(b) if res == 0 else res < 0
+# fn lte_s(a: String, b: String) -> Bool:
+#     var l1 = len(a)
+#     var l2 = len(b)
+#     var min_len = l1 if l1 <= l2 else l2
+#     var res = memcmp(a._as_ptr(), b._as_ptr(), min_len)
+#     return len(a) <= len(b) if res == 0 else res < 0
 
 # @always_inline
 # fn lt(a: String, b: String) -> Bool:
