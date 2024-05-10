@@ -1,6 +1,3 @@
-trait StringableCollectionElement(Stringable, CollectionElement):
-    pass
-
 fn print_v[T: StringableCollectionElement](values: List[T]):
     for v in values:
         print(v[], end="|")
