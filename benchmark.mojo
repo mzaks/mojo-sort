@@ -2,7 +2,7 @@ from random import random_ui64, random_si64, random_float64
 from memory.unsafe import bitcast
 from my_utils import print_v
 from time import now
-from algorithm.sort import sort
+# from algorithm.sort import sort
 from quick_sort import quick_sort
 from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16
 from selection_sort import selection_sort
