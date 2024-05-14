@@ -4,11 +4,12 @@ from sys.intrinsics import compressed_store
 from math import iota, reduce_bit_count, any_true
 from memory import stack_allocation
 from time import now
+from collections.vector import InlinedFixedVector
 
 alias simd_width_i8 = simdwidthof[DType.int8]()
 
 fn vectorize_and_exit[simd_width: Int, workgroup_function: fn[i: Int](Int) capturing -> Bool](size: Int):
-    let loops = size // simd_width
+    var loops = size // simd_width
     for i in range(loops):
         if workgroup_function[simd_width](i * simd_width):
             return
@@ -49,77 +50,77 @@ fn vectorize_and_exit[simd_width: Int, workgroup_function: fn[i: Int](Int) captu
         _= workgroup_function[1](size - rest)
 
 
-fn find_indices(s: String, c: String) -> DynamicVector[UInt64]:
-    let size = len(s)
-    var result = DynamicVector[UInt64]()
-    let char = Int8(ord(c))
-    let p = DTypePointer[DType.int8](s._buffer.data)
+fn find_indices(s: String, c: String) -> List[UInt64]:
+    var size = len(s)
+    var result = List[UInt64]()
+    var char = Int8(ord(c))
+    var p = s.unsafe_ptr()
 
     @parameter
     fn find[simd_width: Int](offset: Int):
         @parameter
         if simd_width == 1:
             if p.offset(offset).load() == char:
-                return result.push_back(offset)
+                return result.append(offset)
         else:
-            let chunk = p.simd_load[simd_width](offset)
-            let occurrence = chunk == char
-            let offsets = iota[DType.uint64, simd_width]() + offset
-            let occurrence_count = reduce_bit_count(occurrence)
-            let current_len = len(result)
+            var chunk = p.load[width=simd_width](offset)
+            var occurrence = chunk == char
+            var offsets = iota[DType.uint64, simd_width]() + offset
+            var occurrence_count = reduce_bit_count(occurrence)
+            var current_len = len(result)
             result.reserve(current_len + occurrence_count)
-            result.resize(current_len + occurrence_count)
-            compressed_store(offsets, result.data.offset(current_len), occurrence)
+            result.resize(current_len + occurrence_count, 0)
+            compressed_store(offsets, DTypePointer[DType.uint64](result.data).offset(current_len), occurrence)
 
-    vectorize[simd_width_i8, find](size)
+    vectorize[find, simd_width_i8](size)
     return result
 
 
 fn occurrence_count(s: String, *c: String) -> Int:
-    let size = len(s)
+    var size = len(s)
     var result = 0
-    var chars = UnsafeFixedVector[Int8](len(c))
+    var chars = InlinedFixedVector[Int8](len(c))
     for i in range(len(c)):
-        chars.append(Int8(ord(__get_address_as_lvalue(c[i]))))
-    let p = DTypePointer[DType.int8](s._buffer.data)
+        chars.append(Int8(ord(c[i])))
+    var p = s.unsafe_ptr()
 
     @parameter
     fn find[simd_width: Int](offset: Int):
         @parameter
         if simd_width == 1:
             for i in range(len(chars)):
-                let char = chars[i]
+                var char = chars[i]
                 if p.offset(offset).load() == char:
                     result += 1
                     return
         else:
-            let chunk = p.simd_load[simd_width](offset)
+            var chunk = p.load[width=simd_width](offset)
 
             var occurrence = SIMD[DType.bool, simd_width](False)
             for i in range(len(chars)):
                 occurrence |= chunk == chars[i]
-            let occurrence_count = reduce_bit_count(occurrence)
+            var occurrence_count = reduce_bit_count(occurrence)
             result += occurrence_count
 
-    vectorize[simd_width_i8, find](size)
+    vectorize[find, simd_width_i8](size)
     return result
 
 
 fn contains_any_of(s: String, *c: String) -> Bool:
-    let size = len(s)
-    let c_list: VariadicListMem[String] = c
-    var chars = UnsafeFixedVector[Int8](len(c_list))
-    for i in range(len(c_list)):
-        chars.append(Int8(ord(__get_address_as_lvalue(c[i]))))
-    var p = DTypePointer[DType.int8](s._buffer.data)
+    var size = len(s)
+    # var c_list: VariadicListMem[String] = c
+    var chars = InlinedFixedVector[Int8](len(c))
+    for i in range(len(c)):
+        chars.append(Int8(ord(c[i])))
+    var p = s.unsafe_ptr()
     var flag = False
 
     @parameter
     fn find[simd_width: Int](i: Int) -> Bool:
-        let chunk = p.simd_load[simd_width]()
+        var chunk = p.load[width=simd_width]()
         p = p.offset(simd_width)
         for i in range(len(chars)):
-            let occurrence = chunk == chars[i]
+            var occurrence = chunk == chars[i]
             if any_true(occurrence):
                 flag = True
                 return flag
@@ -137,8 +138,8 @@ fn string_from_pointer(p: DTypePointer[DType.int8], length: Int) -> String:
     return String(p, length)
 
 
-fn print_v(v: DynamicVector[UInt64]):
-    print_no_newline("(", len(v), ")", "[")
+fn print_v(v: List[UInt64]):
+    print("(" +  str(len(v)) + ")[")
     for i in range(len(v)):
-        print_no_newline(v[i], ",")
-    print("]")
+        var end = ", " if i < len(v) - 1 else "]\n"
+        print(v[i], end)

@@ -44,7 +44,7 @@ function check_out_remote_module() (
 function checkout()(
     # Add check out remote module calls here
     
-    check_out_remote_module "https://github.com/mzaks/mojo-hash" "my_utils=hash_utils"
+    # check_out_remote_module "https://github.com/mzaks/mojo-hash" "my_utils=hash_utils"
     check_out_remote_module "https://github.com/mzaks/mojo-csv" "csv"
 )
 
