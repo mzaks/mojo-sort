@@ -1,6 +1,8 @@
 from random import random_ui64
 from my_utils import print_v
-from tim_sort import tim_sort
+from tim_sort import tim_sort, parallel_tim_sort
+
+from time import now
 
 fn main():
     var v1 = List[UInt32]()
@@ -19,8 +21,19 @@ fn main():
 
     var v2 = List[UInt64]()
     for _ in range(100):
-        v2.append(random_ui64(0, 1000))
+        v2.append(random_ui64(0, 100000000))
 
-    print_v(v2) 
-    tim_sort(v2)
     print_v(v2)
+    var v3 = List(v2)
+    var tik = now()
+    tim_sort(v3)
+    var tok = now()
+    print_v(v3)
+    print("Ser in", tok - tik)
+
+    var v4 = List(v2)
+    tik = now()
+    parallel_tim_sort(v4)
+    tok = now()
+    print_v(v4)
+    print("Par in", tok - tik)

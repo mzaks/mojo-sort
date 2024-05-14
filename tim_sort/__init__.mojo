@@ -1,1 +1,1 @@
-from .sort import tim_sort
+from .sort import tim_sort, parallel_tim_sort
