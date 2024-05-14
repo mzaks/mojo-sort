@@ -1,0 +1,103 @@
+Algorithm name,DType,List size,Max value,Min total duration,Min duration per element,Sorted
+Selection sort,uint8,5,3000,26,5,True
+Insertion sort,uint8,5,3000,19,3,True
+Std sort,uint8,5,3000,115,23,True
+Quick sort,uint8,5,3000,35,7,True
+Tim sort,uint8,5,3000,22,4,True
+Counting sort,uint8,5,3000,518,103,True
+Radix sort,uint8,5,3000,215,43,True
+Selection sort,uint8,20,3000,131,6,True
+Insertion sort,uint8,20,3000,54,2,True
+Std sort,uint8,20,3000,154,7,True
+Quick sort,uint8,20,3000,121,6,True
+Tim sort,uint8,20,3000,107,5,True
+Counting sort,uint8,20,3000,583,29,True
+Radix sort,uint8,20,3000,228,11,True
+Selection sort,uint8,50,3000,711,14,True
+Insertion sort,uint8,50,3000,361,7,True
+Std sort,uint8,50,3000,776,15,True
+Quick sort,uint8,50,3000,516,10,True
+Tim sort,uint8,50,3000,591,11,True
+Counting sort,uint8,50,3000,677,13,True
+Radix sort,uint8,50,3000,275,5,True
+Selection sort,uint8,300,3000,32080,106,True
+Insertion sort,uint8,300,3000,10218,34,True
+Std sort,uint8,300,3000,5930,19,True
+Quick sort,uint8,300,3000,4711,15,True
+Tim sort,uint8,300,3000,6420,21,True
+Counting sort,uint8,300,3000,1005,3,True
+Radix sort,uint8,300,3000,581,1,True
+Selection sort,int8,300,3000,27100,90,True
+Insertion sort,int8,300,3000,8834,29,True
+Std sort,int8,300,3000,6214,20,True
+Quick sort,int8,300,3000,4265,14,True
+Tim sort,int8,300,3000,4855,16,True
+Parallel Tim sort,int8,300,3000,17922,59,True
+Radix sort,int8,300,3000,490,1,True
+Selection sort,uint16,3000,3000,2283103,761,True
+Insertion sort,uint16,3000,3000,903909,301,True
+Std sort,uint16,3000,3000,110652,36,True
+Quick sort,uint16,3000,3000,124374,41,True
+Tim sort,uint16,3000,3000,94588,31,True
+Parallel Tim sort,uint16,3000,3000,64991,21,True
+Counting sort,uint16,3000,3000,13572,4,True
+Radix sort,uint16,3000,3000,7250,2,True
+Selection sort,int16,3000,3000,2289158,763,True
+Insertion sort,int16,3000,3000,888161,296,True
+Std sort,int16,3000,3000,116783,38,True
+Quick sort,int16,3000,3000,132958,44,True
+Tim sort,int16,3000,3000,95076,31,True
+Parallel Tim sort,int16,3000,3000,63027,21,True
+Radix sort,int16,3000,3000,9221,3,True
+Selection sort,float16,3000,3000,4196472,1398,True
+Insertion sort,float16,3000,3000,2103017,701,True
+Std sort,float16,3000,3000,224381,74,True
+Quick sort,float16,3000,3000,151287,50,True
+Tim sort,float16,3000,3000,162352,54,True
+Parallel Tim sort,float16,3000,3000,87313,29,True
+Radix sort,float16,3000,3000,10912,3,True
+Std sort,uint32,300000,2000000000,21969772,73,True
+Quick sort,uint32,300000,2000000000,21148206,70,True
+Tim sort,uint32,300000,2000000000,15918864,53,True
+Parallel Tim sort,uint32,300000,2000000000,6890569,22,True
+Radix sort,uint32,300000,2000000000,2276633,7,True
+Radix sort 11,uint32,300000,2000000000,2323702,7,True
+Std sort,int32,300000,2000000000,21937529,73,True
+Quick sort,int32,300000,2000000000,20777250,69,True
+Tim sort,int32,300000,2000000000,16003725,53,True
+Parallel Tim sort,int32,300000,2000000000,6844498,22,True
+Radix sort,int32,300000,2000000000,2299347,7,True
+Radix sort 11,int32,300000,2000000000,2352531,7,True
+Std sort,float32,5000000,2000000000,504485446,100,True
+Quick sort,float32,5000000,2000000000,448023078,89,True
+Tim sort,float32,5000000,2000000000,349352149,69,True
+Parallel Tim sort,float32,5000000,2000000000,135811541,27,True
+Radix sort,float32,5000000,2000000000,50109996,10,True
+Radix sort 11,float32,5000000,2000000000,47750934,9,True
+Std sort,uint64,3000000,200000000000,283869222,94,True
+Quick sort,uint64,3000000,200000000000,254671312,84,True
+Tim sort,uint64,3000000,200000000000,195589013,65,True
+Parallel Tim sort,uint64,3000000,200000000000,84258283,28,True
+Radix sort,uint64,3000000,200000000000,77239379,25,True
+Radix sort 13,uint64,3000000,200000000000,58921306,19,True
+Std sort,int64,3000000,200000000000,264787746,88,True
+Quick sort,int64,3000000,200000000000,244645935,81,True
+Tim sort,int64,3000000,200000000000,193942385,64,True
+Parallel Tim sort,int64,3000000,200000000000,83949517,27,True
+Radix sort,int64,3000000,200000000000,77933791,25,True
+Radix sort 13,int64,3000000,200000000000,58967876,19,True
+Std sort,float64,3000000,200000000000,297268154,99,True
+Quick sort,float64,3000000,200000000000,256048485,85,True
+Tim sort,float64,3000000,200000000000,207751741,69,True
+Parallel Tim sort,float64,3000000,200000000000,86875550,28,True
+Radix sort,float64,3000000,200000000000,83552900,27,True
+Radix sort 13,float64,3000000,200000000000,68885139,22,True
+Radix sort 16,float64,3000000,200000000000,113632305,37,True
+Std sort,float64,300,200,5216,17,True
+Quick sort,float64,300,200,4392,14,True
+Tim sort,float64,300,200,7840,26,True
+Parallel Tim sort,float64,300,200,17869,59,True
+Radix sort,float64,300,200,6472,21,True
+Radix sort 13,float64,300,200,19146,63,True
+Radix sort 16,float64,300,200,108474,361,True
+
