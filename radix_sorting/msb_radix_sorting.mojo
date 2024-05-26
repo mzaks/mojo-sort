@@ -30,10 +30,10 @@ fn _msb_radix_sort(inout values: List[String], start: Int, end: Int, depth: Int)
     var max_len = 0
     for i in range(start, end):
         var v = values[i]
-        var p = v.unsafe_uint8_ptr().load(depth)
+        var p = DTypePointer(v.unsafe_uint8_ptr()).load(depth)
         _max(max_len, len(v))
         # var c = bitcast[DType.uint8](buf[depth])
-        counts[p] += 1
+        counts[int(p)] += 1
     if depth >= max_len:
         return
     
@@ -63,7 +63,7 @@ fn _msb_radix_sort(inout values: List[String], start: Int, end: Int, depth: Int)
         var i = end - 1
         while i >= start:
             # print(i)
-            var c = values[i]._buffer[depth]
+            var c = int(values[i]._buffer[depth])
             out[int(sums[c] - 1) + start] = values[i]
             sums[c] -= 1
             i -= 1

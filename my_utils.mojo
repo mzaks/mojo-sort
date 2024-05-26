@@ -1,9 +1,9 @@
 trait StringableCollectionElement(Stringable, CollectionElement):
     pass
 
-fn print_v[T: StringableCollectionElement](values: List[T]):
+fn print_v[T: StringableCollectionElement](values: List[T], end: StringLiteral = "|"):
     for v in values:
-        print(v[], end="|")
+        print(v[], end=end)
     print()
 
 # fn lte_s(a: String, b: String) -> Bool:

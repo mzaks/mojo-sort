@@ -4,12 +4,12 @@ from insertion_sort import insertion_sort
 from quick_sort import quick_sort
 from radix_sorting import msb_radix_sort
 from multi_key_quicksort import multi_key_quicksort
+from tim_sort import tim_sort, parallel_tim_sort
 
 fn is_sorted(elements: List[String]) -> Bool:
-    var current = elements[0]
     for i in range(1, len(elements)):
-        if elements[i] != current and lt(elements[i], current):
-            print("!!!", current, elements[i])
+        if elements[i-1] > elements[i]:
+            print("!!!", elements[i-1], elements[i])
             return False
     return True 
 
@@ -30,27 +30,48 @@ fn main():
     print("+++++IN+++++")
     var corpus = corpus4()
     insertion_sort[String, lt](corpus)
-    print_v(corpus)
+    # print_v(corpus)
     if not is_sorted(corpus):
         print("NO!!!!")
 
     print("+++++QK+++++")
-    corpus = corpus2()
+    corpus = corpus4()
     quick_sort[String, lt](corpus)
-    print_v(corpus)
+    # print_v(corpus)
     if not is_sorted(corpus):
         print("NO!!!!")
 
     print("+++++RX+++++")
-    corpus = corpus2()
+    corpus = corpus4()
     msb_radix_sort(corpus)
-    print_v(corpus)
+    # print_v(corpus)
     if not is_sorted(corpus):
         print("NO!!!!")
 
     print("+++++MK+++++")
-    corpus = corpus2()
+    corpus = corpus4()
     multi_key_quicksort(corpus)
-    print_v(corpus)
+    # print_v(corpus)
+    if not is_sorted(corpus):
+        print("NO!!!!")
+
+    print("+++++STD+++++")
+    corpus = corpus4()
+    sort(corpus)
+    # print_v(corpus)
+    if not is_sorted(corpus):
+        print("NO!!!!")
+
+    print("+++++TIM+++++")
+    corpus = corpus4()
+    tim_sort(corpus)
+    # print_v(corpus)
+    if not is_sorted(corpus):
+        print("NO!!!!")
+
+    print("+++++PTIM+++++")
+    corpus = corpus4()
+    parallel_tim_sort(corpus)
+    # print_v(corpus)
     if not is_sorted(corpus):
         print("NO!!!!")
