@@ -1,0 +1,130 @@
+name                                , met (ms)              , iters, Speedup factor
+std_sort_random_4096_uint8          ,  0.08397              ,   100,   
+radix_sort_random_4096_uint8        ,  0.00229              ,   100, 36.6681222707424
+std_sort_random_65536_uint8         ,  1.1504               ,   100,   
+radix_sort_random_65536_uint8       ,  0.03542              ,   100, 32.4788255223038
+std_sort_random_1048576_uint8       , 18.92865              ,   100,   
+radix_sort_random_1048576_uint8     ,  0.6688               ,   100, 28.3024072966507
+std_sort_random_4096_int8           ,  0.07321              ,   100,   
+radix_sort_random_4096_int8         ,  0.0025800000000000003,   100, 28.3759689922481
+std_sort_random_65536_int8          ,  1.09716              ,   100,   
+radix_sort_random_65536_int8        ,  0.0382               ,   100, 28.7214659685864
+std_sort_random_1048576_int8        , 17.00368              ,   100,   
+radix_sort_random_1048576_int8      ,  0.6988500000000001   ,   100, 24.3309436932103
+std_sort_random_4096_uint16         ,  0.10039999999999999  ,   100,   
+radix_sort_random_4096_uint16       ,  0.0046500000000000005,   100, 21.5913978494624
+std_sort_random_65536_uint16        ,  2.04364              ,   100,   
+radix_sort_random_65536_uint16      , 79                    ,   100,  0.0258688607594937
+std_sort_random_1048576_uint16      , 37.13438              ,   100,   
+radix_sort_random_1048576_uint16    ,  1.35895              ,   100, 27.3257882924317
+std_sort_random_4096_int16          ,  0.09672              ,   100,   
+radix_sort_random_4096_int16        ,  0.00505              ,   100, 19.1524752475248
+std_sort_random_65536_int16         ,  2.01981              ,   100,   
+radix_sort_random_65536_int16       ,  0.08266              ,   100, 24.4351560609727
+std_sort_random_1048576_int16       , 34.06125              ,   100,   
+radix_sort_random_1048576_int16     ,  1.45625              ,   100, 23.3896995708155
+std_sort_random_4096_float16        ,  0.11710000000000001  ,   100,   
+radix_sort_random_4096_float16      ,  0.00668              ,   100, 17.5299401197605
+std_sort_random_65536_float16       ,  2.22413              ,   100,   
+radix_sort_random_65536_float16     ,  0.11195000000000001  ,   100, 19.8671728450201
+std_sort_random_1048576_float16     , 33.79625              ,   100,   
+radix_sort_random_1048576_float16   ,  1.7924600000000002   ,   100, 18.8546745813017
+std_sort_random_4096_bfloat16       ,  0.12251              ,   100,   
+radix_sort_random_4096_bfloat16     ,  0.01525              ,   100,  8.03344262295082
+std_sort_random_65536_bfloat16      ,  1.83012              ,   100,   
+radix_sort_random_65536_bfloat16    ,  0.24712              ,   100,  7.40579475558433
+std_sort_random_1048576_bfloat16    , 26.890880000000003    ,   100,   
+radix_sort_random_1048576_bfloat16  ,  3.8505000000000003   ,   100,  6.98373717699
+std_sort_random_4096_uint32         ,  0.09447              ,   100,   
+radix_sort_random_4096_uint32       ,  0.00989              ,   100,  9.5520728008089
+radix11_sort_random_4096_uint32     ,  0.0072499999999999995,   100, 13.0303448275862
+std_sort_random_65536_uint32        ,  2.00672              ,   100,   
+radix_sort_random_65536_uint32      ,  0.16495              ,   100, 12.1656259472567
+radix11_sort_random_65536_uint32    ,  0.11896000000000001  ,   100, 16.8688634835239
+std_sort_random_1048576_uint32      , 40.74225              ,   100,   
+radix_sort_random_1048576_uint32    ,  3.14918              ,   100, 12.9374154541817
+radix11_sort_random_1048576_uint32  ,  2.0237700000000003   ,   100, 20.1318578692243
+std_sort_random_4096_int32          ,  0.09808              ,   100,   
+radix_sort_random_4096_int32        ,  0.01129              ,   100,  8.6873339238264
+radix11_sort_random_4096_int32      ,  0.00699              ,   100, 14.0314735336195
+std_sort_random_65536_int32         ,  2.01301              ,   100,   
+radix_sort_random_65536_int32       ,  0.17118              ,   100, 11.7596097674962
+radix11_sort_random_65536_int32     ,  0.11907              ,   100, 16.9061056521374
+std_sort_random_1048576_int32       , 40.54349              ,   100,   
+radix_sort_random_1048576_int32     ,  3.20576              ,   100, 12.6470758884009
+radix11_sort_random_1048576_int32   ,  2.09173              ,   100, 19.3827549444718
+std_sort_random_4096_float32        ,  0.12023999999999999  ,   100,   
+radix_sort_random_4096_float32      ,  0.0216               ,   100,  5.56666666666667
+radix11_sort_random_4096_float32    ,  0.00865              ,   100, 13.9005780346821
+std_sort_random_65536_float32       ,  2.58667              ,   100,   
+radix_sort_random_65536_float32     ,  0.34031999999999996  ,   100,  7.60069934179596
+radix11_sort_random_65536_float32   ,  0.14207              ,   100, 18.2070106285634
+std_sort_random_1048576_float32     , 51.27448999999999     ,   100,   
+radix_sort_random_1048576_float32   ,  5.61809              ,   100,  9.12667650393639
+radix11_sort_random_1048576_float32 ,  2.39375              ,   100, 21.4201524804178
+std_sort_random_4096_uint64         ,  0.00191              ,   100,   
+radix_sort_random_4096_uint64       ,  0.07103              ,   100,  0.0268900464592426
+radix13_sort_random_4096_uint64     ,  0.03738              ,   100,  0.0510968432316747
+radix16_sort_random_4096_uint64     ,  0.07319              ,   100,  0.0260964612652002
+std_sort_random_65536_uint64        ,  0.030520000000000002 ,   100,   
+radix_sort_random_65536_uint64      ,  1.13204              ,   100,  0.02696017808558
+radix13_sort_random_65536_uint64    ,  0.47625              ,   100,  0.0640839895013123
+radix16_sort_random_65536_uint64    ,  0.46570999999999996  ,   100,  0.0655343454080866
+std_sort_random_1048576_uint64      ,  0.48717              ,   100,   
+radix_sort_random_1048576_uint64    , 19.104580000000002    ,   100,  0.025500168022537
+radix13_sort_random_1048576_uint64  ,  7.40538              ,   100,  0.0657859556160521
+radix16_sort_random_1048576_uint64  ,  6.6749               ,   100,  0.0729853630766004
+std_sort_random_4096_int64          ,  0.09545999999999999  ,   100,   
+radix_sort_random_4096_int64        ,  0.021019999999999997 ,   100,  4.54138915318744
+radix13_sort_random_4096_int64      ,  0.022850000000000002 ,   100,  4.17768052516411
+radix16_sort_random_4096_int64      ,  0.07776              ,   100,  1.22762345679012
+std_sort_random_65536_int64         ,  2.04148              ,   100,   
+radix_sort_random_65536_int64       ,  0.38566              ,   100,  5.29347093294612
+radix13_sort_random_65536_int64     ,  0.30255              ,   100,  6.74757891257643
+radix16_sort_random_65536_int64     ,  0.47563              ,   100,  4.29215987216954
+std_sort_random_1048576_int64       , 40.837379999999996    ,   100,   
+radix_sort_random_1048576_int64     ,  7.036040000000001    ,   100,  5.80402897084155
+radix13_sort_random_1048576_int64   ,  4.7611799999999995   ,   100,  8.57715524302799
+radix16_sort_random_1048576_int64   ,  6.93527              ,   100,  5.88836195274301
+std_sort_random_4096_float64        ,  0.12325              ,   100,   
+radix_sort_random_4096_float64      ,  0.03786              ,   100,  3.2554146856841
+radix13_sort_random_4096_float64    ,  0.028849999999999997 ,   100,  4.27209705372617
+radix16_sort_random_4096_float64    ,  0.07099              ,   100,  1.73616002253839
+std_sort_random_65536_float64       ,  2.54469              ,   100,   
+radix_sort_random_65536_float64     ,  0.7280500000000001   ,   100,  3.49521324084884
+radix13_sort_random_65536_float64   ,  0.37420000000000003  ,   100,  6.80034740780331
+radix16_sort_random_65536_float64   ,  0.43566000000000005  ,   100,  5.84099986227792
+std_sort_random_1048576_float64     , 51.49125              ,   100,   
+radix_sort_random_1048576_float64   , 12.49492              ,   100,  4.12097476414415
+radix13_sort_random_1048576_float64 ,  5.98297              ,   100,  8.6063025554198
+radix16_sort_random_1048576_float64 ,  5.73289              ,   100,  8.98172649396727
+std_sort_low_card_4096_delta_0      ,  0.00214              ,   100,   
+std_radix_low_card_4096_delta_0     ,  0.0028499999999999997,   100,  0.750877192982456
+std_sort_low_card_4096_delta_2      ,  0.01688              ,   100,   
+std_radix_low_card_4096_delta_2     ,  0.00241              ,   100,  7.00414937759336
+std_sort_low_card_4096_delta_5      ,  0.025539999999999997 ,   100,   
+std_radix_low_card_4096_delta_5     ,  0.0023899999999999998,   100, 10.6861924686192
+std_sort_low_card_4096_delta_20     ,  0.04242              ,   100,   
+std_radix_low_card_4096_delta_20    ,  0.0023899999999999998,   100, 17.7489539748954
+std_sort_low_card_4096_delta_100    ,  0.06387              ,   100,   
+std_radix_low_card_4096_delta_100   ,  0.0023799999999999997,   100, 26.8361344537815
+std_sort_low_card_65536_delta_0     ,  0.03225              ,   100,   
+std_radix_low_card_65536_delta_0    ,  0.0368               ,   100,  0.876358695652174
+std_sort_low_card_65536_delta_2     ,  0.26018              ,   100,   
+std_radix_low_card_65536_delta_2    ,  0.03693              ,   100,  7.04522068778771
+std_sort_low_card_65536_delta_5     ,  0.38804              ,   100,   
+std_radix_low_card_65536_delta_5    ,  0.037149999999999996 ,   100, 10.4452220726783
+std_sort_low_card_65536_delta_20    ,  0.6371800000000001   ,   100,   
+std_radix_low_card_65536_delta_20   ,  0.03741              ,   100, 17.0323442929698
+std_sort_low_card_65536_delta_100   ,  0.95475              ,   100,   
+std_radix_low_card_65536_delta_100  ,  0.03664              ,   100, 26.0575873362445
+std_sort_low_card_1048576_delta_0   ,  0.50822              ,   100,   
+std_radix_low_card_1048576_delta_0  ,  0.6726399999999999   ,   100,  0.755560180780209
+std_sort_low_card_1048576_delta_2   ,  3.90502              ,   100,   
+std_radix_low_card_1048576_delta_2  ,  0.6738599999999999   ,   100,  5.7950019291841
+std_sort_low_card_1048576_delta_5   ,  6.0216899999999995   ,   100,   
+std_radix_low_card_1048576_delta_5  ,  0.66578              ,   100,  9.04456427047974
+std_sort_low_card_1048576_delta_20  ,  9.912609999999999    ,   100,   
+std_radix_low_card_1048576_delta_20 ,  0.67086              ,   100, 14.7759741227678
+std_sort_low_card_1048576_delta_100 , 14.740160000000001    ,   100,   
+std_radix_low_card_1048576_delta_100,  0.67134              ,   100, 21.9563261536628
