@@ -1,54 +1,73 @@
 
 from memory import memset_zero, memcpy, stack_allocation
-from memory.unsafe import bitcast
+from memory.unsafe import bitcast, bit_width_of
 from sys.intrinsics import PrefetchOptions
 
-@always_inline
-fn _float_flip(f: UInt64) -> UInt64:
-    var mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
-    return f ^ mask
-
-@always_inline
-fn _float_flip_x(inout f: UInt64):
-    var mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
-    f ^= mask
-
-@always_inline
-fn _inverse_float_flip(f: UInt64) -> UInt64:
-    var mask = ((f >> 63) - 1) | 0x80_00_00_00_00_00_00_00
-    return f ^ mask
-
-alias mask13 = (1 << 13) - 1
-
-@always_inline
-fn _0(v: UInt64) -> Int:
-    return int(v & mask13)
-
-@always_inline
-fn _1(v: UInt64) -> Int:
-    return int(v >> 13 & mask13)
-
-@always_inline
-fn _2(v: UInt64) -> Int:
-    return int(v >> 26 & mask13)
-
-@always_inline
-fn _3(v: UInt64) -> Int:
-    return int(v >> 39 & mask13)
-
-@always_inline
-fn _4(v: UInt64) -> Int:
-    return int(v >> 52)
-
-
 # based on http://stereopsis.com/radix.html
-fn radix_sort13[D: DType](inout vector: List[SIMD[D, 1]]):
-    constrained[D.sizeof() == 8, "D needs to be 8 bytes wide"]()
+fn radix_sort13[D: DType](mut vector: List[SIMD[D, 1]]):
+
+    @always_inline
+    fn _float_flip(f: UInt64) -> UInt64:
+        @parameter
+        if D == DType.uint64:
+            return f
+        elif D == DType.int64:
+            return f ^ 0x80_00_00_00_00_00_00_00
+        else:
+            var mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
+            return f ^ mask
+
+    @always_inline
+    fn _float_flip_x(mut f: UInt64):
+        @parameter
+        if D == DType.uint64:
+            return
+        elif D == DType.int64:
+            f ^= 0x80_00_00_00_00_00_00_00
+        else:
+            var mask = bitcast[DType.uint64, 1](-bitcast[DType.int64, 1](f >> 63) | 0x80_00_00_00_00_00_00_00)
+            f ^= mask
+
+    @always_inline
+    fn _inverse_float_flip(f: UInt64) -> UInt64:
+        @parameter
+        if D == DType.uint64:
+            return f
+        elif D == DType.int64:
+            return f ^ 0x80_00_00_00_00_00_00_00
+        else:
+            var mask = ((f >> 63) - 1) | 0x80_00_00_00_00_00_00_00
+            return f ^ mask
+
+    comptime mask13 = (1 << 13) - 1
+
+    @always_inline
+    fn _0(v: UInt64) -> Int:
+        return Int(v & mask13)
+
+    @always_inline
+    fn _1(v: UInt64) -> Int:
+        return Int(v >> 13 & mask13)
+
+    @always_inline
+    fn _2(v: UInt64) -> Int:
+        return Int(v >> 26 & mask13)
+
+    @always_inline
+    fn _3(v: UInt64) -> Int:
+        return Int(v >> 39 & mask13)
+
+    @always_inline
+    fn _4(v: UInt64) -> Int:
+        return Int(v >> 52)
+
+
+    constrained[bit_width_of[D]() == 64, "D needs to be 8 bytes wide"]()
     var elements = len(vector)
     var array = List[UInt64](capacity=elements)
-    memcpy(array.data, vector.data.bitcast[UInt64](), elements)
+    memcpy(dest=array.unsafe_ptr(), src=vector.unsafe_ptr().bitcast[UInt64](), count=elements)
     var sorted = List[UInt64](capacity=elements)
-    alias histogram_size = 1 << 13
+    comptime histogram_size = 1 << 13
     var histogram1 = stack_allocation[histogram_size * 5, DType.uint32]()
     memset_zero(histogram1, histogram_size * 5)
 
@@ -133,7 +152,7 @@ fn radix_sort13[D: DType](inout vector: List[SIMD[D, 1]]):
         var p1 = histogram1.offset(_0(fi))
         var index = p1.load() + 1
         p1.store(index)
-        sorted[int(index)] = fi
+        sorted[Int(index)] = fi
 
     for i in range(elements):
         var si = sorted[i]
@@ -141,7 +160,7 @@ fn radix_sort13[D: DType](inout vector: List[SIMD[D, 1]]):
         var p2 = histogram2.offset(pos)
         var index = p2.load() + 1
         p2.store(index)
-        array[int(index)] = si
+        array[Int(index)] = si
 
     for i in range(elements):
         var ai = array[i]
@@ -149,7 +168,7 @@ fn radix_sort13[D: DType](inout vector: List[SIMD[D, 1]]):
         var p3 = histogram3.offset(pos)
         var index = p3.load() + 1
         p3.store(index)
-        sorted[int(index)] = ai
+        sorted[Int(index)] = ai
 
     for i in range(elements):
         var si = sorted[i]
@@ -157,7 +176,7 @@ fn radix_sort13[D: DType](inout vector: List[SIMD[D, 1]]):
         var p4 = histogram4.offset(pos)
         var index = p4.load() + 1
         p4.store(index)
-        array[int(index)] = si
+        array[Int(index)] = si
 
     for i in range(elements):
         var ai = array[i]
@@ -165,7 +184,7 @@ fn radix_sort13[D: DType](inout vector: List[SIMD[D, 1]]):
         var p5 = histogram5.offset(pos)
         var index = p5.load() + 1
         p5.store(index)
-        vector[int(index)] = _inverse_float_flip(ai)._bits_to_float[D]()
+        vector[Int(index)] = bitcast[D](_inverse_float_flip(ai))
 
     # memcpy(vector.data, sorted.data.bitcast[Float64](), elements)
     # sorted.data.free()

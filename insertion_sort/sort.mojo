@@ -1,4 +1,4 @@
-fn insertion_sort[D: DType](inout vector: List[SIMD[D, 1]]):
+fn insertion_sort[D: DType](mut vector: List[Scalar[D]]):
     for i in range(1, len(vector)):
         var key = vector[i]
         var j = i - 1
@@ -7,11 +7,11 @@ fn insertion_sort[D: DType](inout vector: List[SIMD[D, 1]]):
             j -= 1
         vector[j + 1] = key
 
-fn insertion_sort[D: CollectionElement, lt: fn(D, D) -> Bool](inout vector: List[D]):
+fn insertion_sort[D: Copyable, lt: fn(D, D) -> Bool](mut vector: List[D]):
     for i in range(1, len(vector)):
-        var key = vector[i]
+        var key = vector[i].copy()
         var j = i - 1
         while j >= 0 and lt(key, vector[j]):
-            vector[j + 1] = vector[j]
+            vector[j + 1] = vector[j].copy()
             j -= 1
-        vector[j + 1] = key
+        vector[j + 1] = key.copy()

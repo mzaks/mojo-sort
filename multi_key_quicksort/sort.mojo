@@ -3,7 +3,7 @@
 from random import random_ui64
 
 @always_inline
-fn _vec_swap(inout values: List[String], a: Int, b: Int, n: Int):
+fn _vec_swap(mut values: List[String], a: Int, b: Int, n: Int):
     var n1 = n
     var a1 = a
     var b1 = b
@@ -14,19 +14,19 @@ fn _vec_swap(inout values: List[String], a: Int, b: Int, n: Int):
         n1 -= 1
 
 @always_inline
-fn _exchange(inout values: List[String], a: Int, b: Int):
+fn _exchange(mut values: List[String], a: Int, b: Int):
     values[a], values[b] = values[b], values[a]
 
 @always_inline
 fn _char_at(s: String, index: Int) -> Int:
     if len(s) <= index:
         return 0
-    return int(DTypePointer(s.unsafe_uint8_ptr()).load(index))
+    return Int(s.unsafe_ptr().load(index))
 
-fn _mk_sort(inout values: List[String], n: Int, depth: Int, offset: Int):
+fn _mk_sort(mut values: List[String], n: Int, depth: Int, offset: Int):
     if n <= 1:
         return
-    var a = offset + int(random_ui64(0, n - 1))
+    var a = offset + Int(random_ui64(0, n - 1))
     _exchange(values, offset, a)
     var v = _char_at(values[offset], depth)
     a = offset + 1
@@ -61,5 +61,5 @@ fn _mk_sort(inout values: List[String], n: Int, depth: Int, offset: Int):
     r = d-c
     _mk_sort(values, r, depth, offset + n - r)
 
-fn multi_key_quicksort(inout values: List[String]):
+fn multi_key_quicksort(mut values: List[String]):
     _mk_sort(values, len(values), 0, 0)

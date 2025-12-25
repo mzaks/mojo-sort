@@ -1,0 +1,11 @@
+[workspace]
+authors = ["Maxim Zaks <maxim.zaks@gmail.com>"]
+channels = ["https://conda.modular.com/max-nightly", "conda-forge"]
+name = "mojo-sort"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+mojo = ">=0.26.1.0.dev2025121919,<0.27"

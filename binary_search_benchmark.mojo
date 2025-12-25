@@ -2,7 +2,7 @@ from binary_search import binary_search, classic_binary_search
 from benchmark import run
 from random import random_ui64
 
-fn main():
+def main():
     var l = List[UInt64]()
     var count = 200
     var searches = 5_000_000
@@ -13,7 +13,7 @@ fn main():
     var random_elements = List[UInt64](capacity=searches)
     for _ in range(searches):
         var value = random_ui64(0, count - 1)
-        total += int(value)
+        total += Int(value)
         random_elements.append(value)
 
     var total1 = 0

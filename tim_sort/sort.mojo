@@ -1,9 +1,9 @@
 from algorithm import parallelize
 
-alias group_size = 32
+comptime group_size = 32
 
 @always_inline
-fn _insertion_sort[dt: DType](inout values: List[Scalar[dt]], start: Int, end: Int):
+fn _insertion_sort[dt: DType](mut values: List[Scalar[dt]], start: Int, end: Int):
     for i in range(start, end):
         var key = values[i]
         var j = i - 1
@@ -13,7 +13,7 @@ fn _insertion_sort[dt: DType](inout values: List[Scalar[dt]], start: Int, end: I
         values[j + 1] = key
 
 @always_inline
-fn _merge[dt: DType](inout values: List[Scalar[dt]], start: Int, mid: Int, end: Int):
+fn _merge_scalar[dt: DType, //](mut values: List[Scalar[dt]], start: Int, mid: Int, end: Int):
     if values[mid - 1] <= values[mid]:
         return # already sorted
     var left = values[start:mid]
@@ -44,7 +44,7 @@ fn _merge[dt: DType](inout values: List[Scalar[dt]], start: Int, mid: Int, end: 
         curr += 1
         cur += 1
 
-fn tim_sort[dt: DType](inout values: List[Scalar[dt]]):
+fn tim_sort_scalar[dt: DType, //](mut values: List[Scalar[dt]]):
     var count = len(values)
     for i in range(0, count, group_size):
         _insertion_sort[dt](values, i, min(i + group_size, count))
@@ -55,14 +55,14 @@ fn tim_sort[dt: DType](inout values: List[Scalar[dt]]):
             var mid = min(count, start + size) 
             var end = min((start + 2 * size), count)
             if mid < end:
-                _merge(values, start, mid, end)
+                _merge_scalar(values, start, mid, end)
         size *= 2
 
 @always_inline
 fn ceil_div(value: Int, divisor: Int) -> Int:
     return -(-value // divisor)
 
-fn parallel_tim_sort[dt: DType](inout values: List[Scalar[dt]]):
+fn parallel_tim_sort_scalar[dt: DType](mut values: List[Scalar[dt]]):
     var count = len(values)
     var groups_count = ceil_div(count, group_size)
     
@@ -87,18 +87,20 @@ fn parallel_tim_sort[dt: DType](inout values: List[Scalar[dt]]):
         size *= 2
 
 
-@always_inline
-fn _insertion_sort[type: ComparableCollectionElement](inout values: List[type], start: Int, end: Int):
-    for i in range(start, end):
-        var key = values[i]
-        var j = i - 1
-        while j >= start and key <= values[j]:
-            values[j + 1] = values[j]
-            j -= 1
-        values[j + 1] = key
+comptime ComparableCollectionElement = Comparable & Copyable
 
 @always_inline
-fn _merge[type: ComparableCollectionElement](inout values: List[type], start: Int, mid: Int, end: Int):
+fn _insertion_sort[type: ComparableCollectionElement](mut values: List[type], start: Int, end: Int):
+    for i in range(start, end):
+        var key = values[i].copy()
+        var j = i - 1
+        while j >= start and key <= values[j]:
+            values[j + 1] = values[j].copy()
+            j -= 1
+        values[j + 1] = key.copy()
+
+@always_inline
+fn _merge[type: ComparableCollectionElement](mut values: List[type], start: Int, mid: Int, end: Int):
     if values[mid - 1] <= values[mid]:
         return # already sorted
     var left = values[start:mid]
@@ -112,24 +114,24 @@ fn _merge[type: ComparableCollectionElement](inout values: List[type], start: In
     var curr = 0
     while curl < lenl and curr < lenr:
         if left[curl] <= right[curr]:
-            values[cur] = left[curl]
+            values[cur] = left[curl].copy()
             curl += 1
         else:
-            values[cur] = right[curr]
+            values[cur] = right[curr].copy()
             curr += 1
         cur += 1
 
     while curl < lenl:
-        values[cur] = left[curl]
+        values[cur] = left[curl].copy()
         curl += 1
         cur += 1
     
     while curr < lenr:
-        values[cur] = right[curr]
+        values[cur] = right[curr].copy()
         curr += 1
         cur += 1
 
-fn tim_sort[type: ComparableCollectionElement](inout values: List[type]):
+fn tim_sort[type: ComparableCollectionElement](mut values: List[type]):
     var count = len(values)
     for i in range(0, count, group_size):
         _insertion_sort[type](values, i, min(i + group_size, count))
@@ -143,7 +145,7 @@ fn tim_sort[type: ComparableCollectionElement](inout values: List[type]):
                 _merge(values, start, mid, end)
         size *= 2
 
-fn parallel_tim_sort[type: ComparableCollectionElement](inout values: List[type]):
+fn parallel_tim_sort[type: ComparableCollectionElement](mut values: List[type]):
     var count = len(values)
     var groups_count = ceil_div(count, group_size)
     

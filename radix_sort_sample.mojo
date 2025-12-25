@@ -1,6 +1,6 @@
 from my_utils import *
 from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16, msb_radix_sort
-from time import now
+from time import perf_counter_ns as now
 
 
 fn test_radix():
@@ -13,20 +13,20 @@ fn test_radix():
     v1.append(4513)
     v1.append(45)
 
-    print_v(v1)
+    print(v1)
 
     radix_sort(v1)
-    print_v(v1)
+    print(v1)
 
     var v2 = List[Int8]()
     v2.append(0)
     v2.append(-23)
     v2.append(123)
     v2.append(-48)
-    print_v(v2)
+    print(v2)
 
     radix_sort(v2)
-    print_v(v2)
+    print(v2)
 
     var v3 = List[Float32]()
     v3.append(0)
@@ -39,10 +39,10 @@ fn test_radix():
     v3.append(48.10111)
     v3.append(-0.10111)
     v3.append(0.10111)
-    print_v(v3)
+    print(v3)
 
     radix_sort(v3)
-    print_v(v3)
+    print(v3)
 
     var v4 = List[Float64]()
     v4.append(0)
@@ -55,10 +55,10 @@ fn test_radix():
     v4.append(48.10111)
     v4.append(-0.10111)
     v4.append(0.10111)
-    print_v(v4)
+    print(v4)
 
     radix_sort(v4)
-    print_v(v4)
+    print(v4)
 
     print("DONE!!")
 
@@ -74,10 +74,10 @@ fn test_11():
     v3.append(48.10111)
     v3.append(-0.10111)
     v3.append(0.10111)
-    print_v(v3)
+    print(v3)
 
     radix_sort11(v3)
-    print_v(v3)
+    print(v3)
 
 fn test_13():
     var v3 = List[Float64]()
@@ -91,10 +91,10 @@ fn test_13():
     v3.append(48.10111)
     v3.append(-0.10111)
     v3.append(0.10111)
-    print_v(v3)
+    print(v3)
 
     radix_sort13(v3)
-    print_v(v3)
+    print(v3)
 
 fn test_16():
     var v3 = List[Float64]()
@@ -108,10 +108,10 @@ fn test_16():
     v3.append(48.10111)
     v3.append(-0.10111)
     v3.append(0.10111)
-    print_v(v3)
+    print(v3)
 
     radix_sort16(v3)
-    print_v(v3)
+    print(v3)
 
 
 fn main():
@@ -121,15 +121,15 @@ fn main():
     test_16()
 
     var corpus = corpus7()
-    msb_radix_sort(corpus)
     var tik = now()
-    print_v(corpus)
+    msb_radix_sort(corpus)
     var tok = now()
-    print("Duration", tok - tik)
+    print(corpus)
+    print("Duration", tok - tik, len(corpus))
 
     corpus = corpus3()
-    msb_radix_sort(corpus)
     tik = now()
-    print_v(corpus)
+    msb_radix_sort(corpus)
     tok = now()
-    print("Duration", tok - tik)
+    print(corpus)
+    print("Duration", tok - tik, len(corpus))

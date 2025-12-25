@@ -1,5 +1,5 @@
 from my_utils import *
-from string_compare import lt
+# from string_compare import lt
 from insertion_sort import insertion_sort
 from quick_sort import quick_sort
 from radix_sorting import msb_radix_sort
@@ -29,14 +29,14 @@ fn main():
     # _ = s
     print("+++++IN+++++")
     var corpus = corpus4()
-    insertion_sort[String, lt](corpus)
+    insertion_sort[String, String.__lt__](corpus)
     # print_v(corpus)
     if not is_sorted(corpus):
         print("NO!!!!")
 
     print("+++++QK+++++")
     corpus = corpus4()
-    quick_sort[String, lt](corpus)
+    quick_sort[String, String.__lt__](corpus)
     # print_v(corpus)
     if not is_sorted(corpus):
         print("NO!!!!")
@@ -49,7 +49,7 @@ fn main():
         print("NO!!!!")
 
     print("+++++MK+++++")
-    corpus = corpus4()
+    corpus = corpus1()
     multi_key_quicksort(corpus)
     # print_v(corpus)
     if not is_sorted(corpus):

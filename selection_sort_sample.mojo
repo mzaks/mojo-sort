@@ -1,4 +1,3 @@
-from my_utils import print_v
 from selection_sort import selection_sort
 
 fn main():
@@ -11,10 +10,10 @@ fn main():
     v1.append(4513)
     v1.append(45)
 
-    print_v(v1)
+    print(v1)
 
     selection_sort(v1)
-    print_v(v1)
+    print(v1)
 
 
 

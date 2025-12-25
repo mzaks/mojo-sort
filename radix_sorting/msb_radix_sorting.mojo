@@ -1,15 +1,17 @@
+from memory import memset_zero, memcpy, memcmp, stack_allocation
+
 @always_inline
-fn _max(inout x: Int, y: Int):
-    x = x ^ ((x ^ y) & -int(x < y))
+fn _max(mut x: Int, y: Int):
+    x = x ^ ((x ^ y) & -Int(x < y))
 
 @always_inline
 fn lt(a: String, b: String, depth: Int) -> Bool:
     var min_len = min(len(a), len(b)) - depth
-    var res = memcmp(a.unsafe_uint8_ptr().offset(depth), b.unsafe_uint8_ptr().offset(depth), min_len)
+    var res = memcmp(a.unsafe_ptr().offset(depth), b.unsafe_ptr().offset(depth), min_len)
     return len(a) <= len(b) if res == 0 else res < 0
 
 @always_inline
-fn _insertion_sort(inout values: List[String], start: Int, end: Int, depth: Int):
+fn _insertion_sort(mut values: List[String], start: Int, end: Int, depth: Int):
     for i in range(start, end):
         var key = values[i]
         var j = i - 1
@@ -18,7 +20,7 @@ fn _insertion_sort(inout values: List[String], start: Int, end: Int, depth: Int)
             j -= 1
         values[j + 1] = key
 
-fn _msb_radix_sort(inout values: List[String], start: Int, end: Int, depth: Int):
+fn _msb_radix_sort(mut values: List[String], start: Int, end: Int, depth: Int):
     # print(start, end, depth)
     if end - start <= 32:
         _insertion_sort(values, start, end, depth)
@@ -30,10 +32,10 @@ fn _msb_radix_sort(inout values: List[String], start: Int, end: Int, depth: Int)
     var max_len = 0
     for i in range(start, end):
         var v = values[i]
-        var p = DTypePointer(v.unsafe_uint8_ptr()).load(depth)
+        var p = v.unsafe_ptr().load(depth)
         _max(max_len, len(v))
         # var c = bitcast[DType.uint8](buf[depth])
-        counts[int(p)] += 1
+        counts[Int(p)] += 1
     if depth >= max_len:
         return
     
@@ -58,26 +60,26 @@ fn _msb_radix_sort(inout values: List[String], start: Int, end: Int, depth: Int)
     #     print(p[], ", ")
     # print()
     if len(partitions) == 1 and partitions[0] == end - start:
-        _msb_radix_sort(values, int(start), int(end), depth + 1)
+        _msb_radix_sort(values, Int(start), Int(end), depth + 1)
     else:
         var i = end - 1
         while i >= start:
             # print(i)
-            var c = int(values[i]._buffer[depth])
-            out[int(sums[c] - 1) + start] = values[i]
+            var c = Int(values[i].unsafe_ptr().load(depth))
+            out[Int(sums[c] - 1) + start] = values[i]
             sums[c] -= 1
             i -= 1
 
         # for o in out:
         #     print(o[], end=", ")
         # print()
-        values = out
+        values = out^
 
         for p in partitions:
-            var start = start + sums[p[]]
-            var end = start + counts[p[]] 
-            _msb_radix_sort(values, int(start), int(end), depth + 1)
+            var start = start + sums[p]
+            var end = start + counts[p] 
+            _msb_radix_sort(values, Int(start), Int(end), depth + 1)
 
 
-fn msb_radix_sort(inout values: List[String]):
+fn msb_radix_sort(mut values: List[String]):
     _msb_radix_sort(values, 0, len(values), 0)

@@ -1,25 +1,25 @@
 
 from memory import memset_zero, memcpy, stack_allocation
-from memory.unsafe import bitcast
+from memory.unsafe import bitcast, bit_width_of
 from sys.intrinsics import PrefetchOptions
-from buffer import Buffer
+# from buffer import Buffer
 
 # based on http://stereopsis.com/radix.html
-fn radix_sort11[D: DType](inout vector: List[SIMD[D, 1]]):
+fn radix_sort11[D: DType](mut vector: List[SIMD[D, 1]]):
 
     @always_inline
     fn _float_flip(f: UInt32) -> UInt32:
         @parameter
         if D == DType.uint32:
-            return f
+            return f.cast[DType.uint32]()
         elif D == DType.int32:
-            return f ^ 0x80_00_00_00
+            return f.cast[DType.uint32]() ^ 0x80_00_00_00
         else:
             var mask = bitcast[DType.uint32, 1](-bitcast[DType.int32, 1](f >> 31) | 0x80_00_00_00)
-            return f ^ mask
+            return f.cast[DType.uint32]() ^ mask
 
     @always_inline
-    fn _float_flip_x(inout f: UInt32):
+    fn _float_flip_x(mut f: UInt32):
         @parameter
         if D == DType.uint32:
             return
@@ -42,22 +42,22 @@ fn radix_sort11[D: DType](inout vector: List[SIMD[D, 1]]):
 
     @always_inline
     fn _0(v: UInt32) -> Int:
-        return int(v & 0x7ff)
+        return Int(v & 0x7ff)
 
     @always_inline
     fn _1(v: UInt32) -> Int:
-        return int(v >> 11 & 0x7ff)
+        return Int(v >> 11 & 0x7ff)
 
     @always_inline
     fn _2(v: UInt32) -> Int:
-        return int(v >> 22)
+        return Int(v >> 22)
 
-    constrained[D.sizeof() == 4, "D needs to be 4 bytes wide"]()
+    constrained[bit_width_of[D]() == 32, "D needs to be 4 bytes wide"]()
     var elements = len(vector)
     var array = List[UInt32](capacity=elements)
-    memcpy(array.data, vector.data.bitcast[UInt32](), elements)
+    memcpy(dest=array.unsafe_ptr(), src=vector.unsafe_ptr().bitcast[UInt32](), count=elements)
     var sorted = List[UInt32](capacity=elements)
-    alias histogram_size = 2048
+    comptime histogram_size = 2048
     var histogram1 = stack_allocation[histogram_size * 3, DType.uint32]()
     memset_zero(histogram1, histogram_size * 3)
 
@@ -116,28 +116,28 @@ fn radix_sort11[D: DType](inout vector: List[SIMD[D, 1]]):
         sum3 = tsum
 
     for i in range(elements):
-        var fi = array[i]
+        var fi = array[i].cast[DType.uint32]()
         _float_flip_x(fi)
         var p1 = histogram1.offset(_0(fi))
         var index = p1.load() + 1
         p1.store(index)
-        sorted[int(index)] = fi
+        sorted[Int(index)] = fi
 
     for i in range(elements):
-        var si = sorted[i]
+        var si = sorted[i].cast[DType.uint32]()
         var pos = _1(si)
         var p2 = histogram2.offset(pos)
         var index = p2.load() + 1
         p2.store(index)
-        array[int(index)] = si
+        array[Int(index)] = si
 
     for i in range(elements):
-        var ai = array[i]
+        var ai = array[i].cast[DType.uint32]()
         var pos = _2(ai)
         var p3 = histogram3.offset(pos)
         var index = p3.load() + 1
         p3.store(index)
-        vector[int(index)] = _inverse_float_flip(ai)._bits_to_float[D]()
+        vector[Int(index)] = bitcast[D](_inverse_float_flip(ai))
 
     
     # memcpy(vector.data, sorted.data.bitcast[Float32](), elements)
