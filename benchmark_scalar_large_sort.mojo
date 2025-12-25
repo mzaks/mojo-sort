@@ -17,6 +17,7 @@ from benchmark import Bench, BenchConfig, Bencher, BenchId
 from builtin.sort import sort
 from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16
 from memory.unsafe import bit_width_of
+from pathlib import cwd
 
 # ===-----------------------------------------------------------------------===#
 # Benchmark Utils
@@ -227,7 +228,7 @@ fn bench_low_cardinality_list_sort(mut m: Bench, count: Int, delta: Int) raises:
 
 
 def main():
-    var m = Bench(BenchConfig(max_runtime_secs=0.1))
+    var m = Bench(BenchConfig(out_file=cwd() / "scalar_large_report.csv", max_runtime_secs=0.1))
 
     comptime dtypes = [
         DType.uint8,
