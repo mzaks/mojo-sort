@@ -43,7 +43,7 @@ fn benchmark[D: DType, func: fn(mut List[SIMD[D, 1]]) -> None](
         var tok = now()
         min_duration = min(min_duration, tok - tik)
     
-    print(name, D, size, max, min_duration, min_duration // size, assert_sorted(v1), sep=", ")
+    print(name, D, size, max, min_duration, Float64(min_duration) / size, assert_sorted(v1), sep=", ")
     # builder.push(name, False)
     # builder.push(str(D), False)
     # builder.push(size, False)
@@ -195,7 +195,7 @@ fn main():
     benchmark[DType.float64, parallel_tim_sort_scalar[DType.float64]]("Parallel Tim sort", 3_000_000,200_000_000_000)
     benchmark[DType.float64, radix_sort[DType.float64]]("Radix sort", 3_000_000,200_000_000_000)
     benchmark[DType.float64, radix_sort13[DType.float64]]("Radix sort 13", 3_000_000,200_000_000_000)
-    benchmark[DType.float64, radix_sort16]("Radix sort 16", 3_000_000,200_000_000_000)
+    benchmark[DType.float64, radix_sort16[DType.float64]]("Radix sort 16", 3_000_000,200_000_000_000)
 
     benchmark[DType.float64, std_sort[DType.float64]]("Std sort", 300,200)
     benchmark[DType.float64, quick_sort[DType.float64]]("Quick sort", 300,200)
@@ -203,7 +203,7 @@ fn main():
     benchmark[DType.float64, parallel_tim_sort_scalar[DType.float64]]("Parallel Tim sort", 300,200)
     benchmark[DType.float64, radix_sort[DType.float64]]("Radix sort", 300,200)
     benchmark[DType.float64, radix_sort13[DType.float64]]("Radix sort 13", 300,200)
-    benchmark[DType.float64, radix_sort16]("Radix sort 16", 300,200)
+    benchmark[DType.float64, radix_sort16[DType.float64]]("Radix sort 16", 300,200)
 
     # for i in range(1000, 200_000, 1000):
     #     benchmark[DType.float32, radix_sort[DType.float32]]("Radix sort", i,2_000_000_000)

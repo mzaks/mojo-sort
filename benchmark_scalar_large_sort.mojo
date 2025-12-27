@@ -13,10 +13,10 @@
 
 from random import *
 
-from benchmark import Bench, BenchConfig, Bencher, BenchId
+from benchmark import Bench, BenchConfig, Bencher, BenchId, keep
 from builtin.sort import sort
-from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16
-from memory.unsafe import bit_width_of
+from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16, aflag_sort
+from memory.unsafe import bit_width_of, bitcast
 from pathlib import cwd
 
 # ===-----------------------------------------------------------------------===#
@@ -29,8 +29,18 @@ fn randomize_list[
     dt: DType
 ](mut list: List[Scalar[dt]], size: Int, max: Scalar[dt] = Scalar[dt].MAX):
     @parameter
-    if dt.is_integral():
-        randint(list.unsafe_ptr(), size, 0, Int(max))
+    if dt == DType.uint64:
+        for i in range(size):
+            var res = random_float64()
+            # GCC doesn't support cast from float64 to float16
+            list[i] = bitcast[dt](res)
+    elif dt == DType.int64:
+        for i in range(size):
+            var res = random_float64()
+            # GCC doesn't support cast from float64 to float16
+            list[i] = bitcast[dt](res)
+    elif dt.is_integral():
+        randint(list.unsafe_ptr(), size, Int(Scalar[dt].MIN), Int(max))
     else:
         for i in range(size):
             var res = random_float64()
@@ -70,6 +80,26 @@ fn bench_large_list_sort[dtype: DType](mut m: Bench, count: Int) raises:
         _ = list^
 
     @parameter
+    fn bench_aflag_sort(mut b: Bencher) raises:
+        seed(1)
+        var list = List(length=count, fill=Scalar[dtype]())
+
+        @always_inline
+        @parameter
+        fn preproc():
+            randomize_list(list, count)
+
+        @always_inline
+        @parameter
+        fn call_fn():
+            var s = Span(list)
+            aflag_sort(s)
+
+        b.iter_preproc[call_fn, preproc]()
+        assert_sorted(list)
+        _ = list^
+
+    @parameter
     fn bench_radix_sort(mut b: Bencher) raises:
         seed(1)
         var list = List(length=count, fill=Scalar[dtype]())
@@ -83,6 +113,7 @@ fn bench_large_list_sort[dtype: DType](mut m: Bench, count: Int) raises:
         @parameter
         fn call_fn():
             radix_sort(list)
+            keep(list.unsafe_ptr())
 
         b.iter_preproc[call_fn, preproc]()
         assert_sorted(list)
@@ -149,6 +180,10 @@ fn bench_large_list_sort[dtype: DType](mut m: Bench, count: Int) raises:
         BenchId(String("std_sort_random_", count, "_", dtype))
     )
 
+    m.bench_function[bench_aflag_sort](
+        BenchId(String("aflag_sort_random_", count, "_", dtype))
+    )
+
     m.bench_function[bench_radix_sort](
         BenchId(String("radix_sort_random_", count, "_", dtype))
     )
@@ -207,7 +242,27 @@ fn bench_low_cardinality_list_sort(mut m: Bench, count: Int, delta: Int) raises:
         @always_inline
         @parameter
         fn call_fn():
-            radix_sort(list)
+           radix_sort(list)
+
+        b.iter_preproc[call_fn, preproc]()
+        assert_sorted(list)
+        _ = list^
+
+    @parameter
+    fn bench_aflag_sort(mut b: Bencher) raises:
+        seed(1)
+        var list = List(length=count, fill=UInt8())
+
+        @always_inline
+        @parameter
+        fn preproc():
+            randomize_list(list, count)
+
+        @always_inline
+        @parameter
+        fn call_fn():
+            var s = Span(list)
+            aflag_sort(s)
 
         b.iter_preproc[call_fn, preproc]()
         assert_sorted(list)
@@ -219,6 +274,10 @@ fn bench_low_cardinality_list_sort(mut m: Bench, count: Int, delta: Int) raises:
 
     m.bench_function[bench_radix_sort](
         BenchId(String("std_radix_low_card_", count, "_delta_", delta))
+    )
+
+    m.bench_function[bench_aflag_sort](
+        BenchId(String("std_aflag_low_card_", count, "_delta_", delta))
     )
 
 

@@ -1,5 +1,5 @@
 from my_utils import *
-from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16, msb_radix_sort
+from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16, msb_radix_sort, aflag_sort
 from time import perf_counter_ns as now
 
 
@@ -113,6 +113,17 @@ fn test_16():
     radix_sort16(v3)
     print(v3)
 
+fn test_aflag():
+    var v: List[UInt16] = [315, 0, 645, 13, 64, 48, 32, 0, 2, 7, 8]
+    var s = Span(v)
+    aflag_sort(s)
+    print(v)
+
+    v = [0, 0, 1, 2, 3, 4, 5, 6, 7, 8]
+    s = Span(v)
+    aflag_sort(s)
+    print(v)
+    
 
 fn main():
     test_radix()
@@ -133,3 +144,5 @@ fn main():
     tok = now()
     print(corpus)
     print("Duration", tok - tik, len(corpus))
+
+    test_aflag()

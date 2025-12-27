@@ -1,130 +1,181 @@
-name                                , met (ms)              , iters, Speedup factor
-std_sort_random_4096_uint8          ,  0.08397              ,   100,   
-radix_sort_random_4096_uint8        ,  0.00229              ,   100, 36.6681222707424
-std_sort_random_65536_uint8         ,  1.1504               ,   100,   
-radix_sort_random_65536_uint8       ,  0.03542              ,   100, 32.4788255223038
-std_sort_random_1048576_uint8       , 18.92865              ,   100,   
-radix_sort_random_1048576_uint8     ,  0.6688               ,   100, 28.3024072966507
-std_sort_random_4096_int8           ,  0.07321              ,   100,   
-radix_sort_random_4096_int8         ,  0.0025800000000000003,   100, 28.3759689922481
-std_sort_random_65536_int8          ,  1.09716              ,   100,   
-radix_sort_random_65536_int8        ,  0.0382               ,   100, 28.7214659685864
-std_sort_random_1048576_int8        , 17.00368              ,   100,   
-radix_sort_random_1048576_int8      ,  0.6988500000000001   ,   100, 24.3309436932103
-std_sort_random_4096_uint16         ,  0.10039999999999999  ,   100,   
-radix_sort_random_4096_uint16       ,  0.0046500000000000005,   100, 21.5913978494624
-std_sort_random_65536_uint16        ,  2.04364              ,   100,   
-radix_sort_random_65536_uint16      , 79                    ,   100,  0.0258688607594937
-std_sort_random_1048576_uint16      , 37.13438              ,   100,   
-radix_sort_random_1048576_uint16    ,  1.35895              ,   100, 27.3257882924317
-std_sort_random_4096_int16          ,  0.09672              ,   100,   
-radix_sort_random_4096_int16        ,  0.00505              ,   100, 19.1524752475248
-std_sort_random_65536_int16         ,  2.01981              ,   100,   
-radix_sort_random_65536_int16       ,  0.08266              ,   100, 24.4351560609727
-std_sort_random_1048576_int16       , 34.06125              ,   100,   
-radix_sort_random_1048576_int16     ,  1.45625              ,   100, 23.3896995708155
-std_sort_random_4096_float16        ,  0.11710000000000001  ,   100,   
-radix_sort_random_4096_float16      ,  0.00668              ,   100, 17.5299401197605
-std_sort_random_65536_float16       ,  2.22413              ,   100,   
-radix_sort_random_65536_float16     ,  0.11195000000000001  ,   100, 19.8671728450201
-std_sort_random_1048576_float16     , 33.79625              ,   100,   
-radix_sort_random_1048576_float16   ,  1.7924600000000002   ,   100, 18.8546745813017
-std_sort_random_4096_bfloat16       ,  0.12251              ,   100,   
-radix_sort_random_4096_bfloat16     ,  0.01525              ,   100,  8.03344262295082
-std_sort_random_65536_bfloat16      ,  1.83012              ,   100,   
-radix_sort_random_65536_bfloat16    ,  0.24712              ,   100,  7.40579475558433
-std_sort_random_1048576_bfloat16    , 26.890880000000003    ,   100,   
-radix_sort_random_1048576_bfloat16  ,  3.8505000000000003   ,   100,  6.98373717699
-std_sort_random_4096_uint32         ,  0.09447              ,   100,   
-radix_sort_random_4096_uint32       ,  0.00989              ,   100,  9.5520728008089
-radix11_sort_random_4096_uint32     ,  0.0072499999999999995,   100, 13.0303448275862
-std_sort_random_65536_uint32        ,  2.00672              ,   100,   
-radix_sort_random_65536_uint32      ,  0.16495              ,   100, 12.1656259472567
-radix11_sort_random_65536_uint32    ,  0.11896000000000001  ,   100, 16.8688634835239
-std_sort_random_1048576_uint32      , 40.74225              ,   100,   
-radix_sort_random_1048576_uint32    ,  3.14918              ,   100, 12.9374154541817
-radix11_sort_random_1048576_uint32  ,  2.0237700000000003   ,   100, 20.1318578692243
-std_sort_random_4096_int32          ,  0.09808              ,   100,   
-radix_sort_random_4096_int32        ,  0.01129              ,   100,  8.6873339238264
-radix11_sort_random_4096_int32      ,  0.00699              ,   100, 14.0314735336195
-std_sort_random_65536_int32         ,  2.01301              ,   100,   
-radix_sort_random_65536_int32       ,  0.17118              ,   100, 11.7596097674962
-radix11_sort_random_65536_int32     ,  0.11907              ,   100, 16.9061056521374
-std_sort_random_1048576_int32       , 40.54349              ,   100,   
-radix_sort_random_1048576_int32     ,  3.20576              ,   100, 12.6470758884009
-radix11_sort_random_1048576_int32   ,  2.09173              ,   100, 19.3827549444718
-std_sort_random_4096_float32        ,  0.12023999999999999  ,   100,   
-radix_sort_random_4096_float32      ,  0.0216               ,   100,  5.56666666666667
-radix11_sort_random_4096_float32    ,  0.00865              ,   100, 13.9005780346821
-std_sort_random_65536_float32       ,  2.58667              ,   100,   
-radix_sort_random_65536_float32     ,  0.34031999999999996  ,   100,  7.60069934179596
-radix11_sort_random_65536_float32   ,  0.14207              ,   100, 18.2070106285634
-std_sort_random_1048576_float32     , 51.27448999999999     ,   100,   
-radix_sort_random_1048576_float32   ,  5.61809              ,   100,  9.12667650393639
-radix11_sort_random_1048576_float32 ,  2.39375              ,   100, 21.4201524804178
-std_sort_random_4096_uint64         ,  0.00191              ,   100,   
-radix_sort_random_4096_uint64       ,  0.07103              ,   100,  0.0268900464592426
-radix13_sort_random_4096_uint64     ,  0.03738              ,   100,  0.0510968432316747
-radix16_sort_random_4096_uint64     ,  0.07319              ,   100,  0.0260964612652002
-std_sort_random_65536_uint64        ,  0.030520000000000002 ,   100,   
-radix_sort_random_65536_uint64      ,  1.13204              ,   100,  0.02696017808558
-radix13_sort_random_65536_uint64    ,  0.47625              ,   100,  0.0640839895013123
-radix16_sort_random_65536_uint64    ,  0.46570999999999996  ,   100,  0.0655343454080866
-std_sort_random_1048576_uint64      ,  0.48717              ,   100,   
-radix_sort_random_1048576_uint64    , 19.104580000000002    ,   100,  0.025500168022537
-radix13_sort_random_1048576_uint64  ,  7.40538              ,   100,  0.0657859556160521
-radix16_sort_random_1048576_uint64  ,  6.6749               ,   100,  0.0729853630766004
-std_sort_random_4096_int64          ,  0.09545999999999999  ,   100,   
-radix_sort_random_4096_int64        ,  0.021019999999999997 ,   100,  4.54138915318744
-radix13_sort_random_4096_int64      ,  0.022850000000000002 ,   100,  4.17768052516411
-radix16_sort_random_4096_int64      ,  0.07776              ,   100,  1.22762345679012
-std_sort_random_65536_int64         ,  2.04148              ,   100,   
-radix_sort_random_65536_int64       ,  0.38566              ,   100,  5.29347093294612
-radix13_sort_random_65536_int64     ,  0.30255              ,   100,  6.74757891257643
-radix16_sort_random_65536_int64     ,  0.47563              ,   100,  4.29215987216954
-std_sort_random_1048576_int64       , 40.837379999999996    ,   100,   
-radix_sort_random_1048576_int64     ,  7.036040000000001    ,   100,  5.80402897084155
-radix13_sort_random_1048576_int64   ,  4.7611799999999995   ,   100,  8.57715524302799
-radix16_sort_random_1048576_int64   ,  6.93527              ,   100,  5.88836195274301
-std_sort_random_4096_float64        ,  0.12325              ,   100,   
-radix_sort_random_4096_float64      ,  0.03786              ,   100,  3.2554146856841
-radix13_sort_random_4096_float64    ,  0.028849999999999997 ,   100,  4.27209705372617
-radix16_sort_random_4096_float64    ,  0.07099              ,   100,  1.73616002253839
-std_sort_random_65536_float64       ,  2.54469              ,   100,   
-radix_sort_random_65536_float64     ,  0.7280500000000001   ,   100,  3.49521324084884
-radix13_sort_random_65536_float64   ,  0.37420000000000003  ,   100,  6.80034740780331
-radix16_sort_random_65536_float64   ,  0.43566000000000005  ,   100,  5.84099986227792
-std_sort_random_1048576_float64     , 51.49125              ,   100,   
-radix_sort_random_1048576_float64   , 12.49492              ,   100,  4.12097476414415
-radix13_sort_random_1048576_float64 ,  5.98297              ,   100,  8.6063025554198
-radix16_sort_random_1048576_float64 ,  5.73289              ,   100,  8.98172649396727
-std_sort_low_card_4096_delta_0      ,  0.00214              ,   100,   
-std_radix_low_card_4096_delta_0     ,  0.0028499999999999997,   100,  0.750877192982456
-std_sort_low_card_4096_delta_2      ,  0.01688              ,   100,   
-std_radix_low_card_4096_delta_2     ,  0.00241              ,   100,  7.00414937759336
-std_sort_low_card_4096_delta_5      ,  0.025539999999999997 ,   100,   
-std_radix_low_card_4096_delta_5     ,  0.0023899999999999998,   100, 10.6861924686192
-std_sort_low_card_4096_delta_20     ,  0.04242              ,   100,   
-std_radix_low_card_4096_delta_20    ,  0.0023899999999999998,   100, 17.7489539748954
-std_sort_low_card_4096_delta_100    ,  0.06387              ,   100,   
-std_radix_low_card_4096_delta_100   ,  0.0023799999999999997,   100, 26.8361344537815
-std_sort_low_card_65536_delta_0     ,  0.03225              ,   100,   
-std_radix_low_card_65536_delta_0    ,  0.0368               ,   100,  0.876358695652174
-std_sort_low_card_65536_delta_2     ,  0.26018              ,   100,   
-std_radix_low_card_65536_delta_2    ,  0.03693              ,   100,  7.04522068778771
-std_sort_low_card_65536_delta_5     ,  0.38804              ,   100,   
-std_radix_low_card_65536_delta_5    ,  0.037149999999999996 ,   100, 10.4452220726783
-std_sort_low_card_65536_delta_20    ,  0.6371800000000001   ,   100,   
-std_radix_low_card_65536_delta_20   ,  0.03741              ,   100, 17.0323442929698
-std_sort_low_card_65536_delta_100   ,  0.95475              ,   100,   
-std_radix_low_card_65536_delta_100  ,  0.03664              ,   100, 26.0575873362445
-std_sort_low_card_1048576_delta_0   ,  0.50822              ,   100,   
-std_radix_low_card_1048576_delta_0  ,  0.6726399999999999   ,   100,  0.755560180780209
-std_sort_low_card_1048576_delta_2   ,  3.90502              ,   100,   
-std_radix_low_card_1048576_delta_2  ,  0.6738599999999999   ,   100,  5.7950019291841
-std_sort_low_card_1048576_delta_5   ,  6.0216899999999995   ,   100,   
-std_radix_low_card_1048576_delta_5  ,  0.66578              ,   100,  9.04456427047974
-std_sort_low_card_1048576_delta_20  ,  9.912609999999999    ,   100,   
-std_radix_low_card_1048576_delta_20 ,  0.67086              ,   100, 14.7759741227678
-std_sort_low_card_1048576_delta_100 , 14.740160000000001    ,   100,   
-std_radix_low_card_1048576_delta_100,  0.67134              ,   100, 21.9563261536628
+name;met (ms);iters;Speedup factor
+std_sort_random_4096_uint8;0.08164999999999999;100;
+aflag_sort_random_4096_uint8;0.01489;100;5,48354600402955
+radix_sort_random_4096_uint8;6E-05;100;1360,83333333333
+std_sort_random_65536_uint8;1.1521599999999999;100;
+aflag_sort_random_65536_uint8;0.23254000000000002;100;4,95467446460824
+radix_sort_random_65536_uint8;0.00047;100;2451,40425531915
+std_sort_random_1048576_uint8;17.6267;100;
+aflag_sort_random_1048576_uint8;4.1519;100;4,24545388858113
+radix_sort_random_1048576_uint8;0.0076500000000000005;100;2304,14379084967
+std_sort_random_4096_int8;0.08734;100;
+aflag_sort_random_4096_int8;0.01581;100;5,52435167615433
+radix_sort_random_4096_int8;8.999999999999999e-05;100;970,444444444445
+std_sort_random_65536_int8;1.24997;100;
+aflag_sort_random_65536_int8;0.25068999999999997;100;4,98611831345487
+radix_sort_random_65536_int8;0.00043;100;2906,90697674419
+std_sort_random_1048576_int8;19.14769;100;
+aflag_sort_random_1048576_int8;4.41536;100;4,3366090194231
+radix_sort_random_1048576_int8;0.00777;100;2464,31016731017
+std_sort_random_4096_uint16;0.09597;100;
+aflag_sort_random_4096_uint16;0.06405;100;1,4983606557377
+radix_sort_random_4096_uint16;6E-05;100;1599,5
+std_sort_random_65536_uint16;2.03152;100;
+aflag_sort_random_65536_uint16;0.71375;100;2,84626269702277
+radix_sort_random_65536_uint16;0.00054;100;3762,07407407407
+std_sort_random_1048576_uint16;36.78921;100;
+aflag_sort_random_1048576_uint16;10.11472;100;3,63719509783761
+radix_sort_random_1048576_uint16;0.00813;100;4525,11808118081
+std_sort_random_4096_int16;0.09837;100;
+aflag_sort_random_4096_int16;0.06984;100;1,40850515463918
+radix_sort_random_4096_int16;8E-05;100;1229,625
+std_sort_random_65536_int16;2.05232;100;
+aflag_sort_random_65536_int16;0.7544;100;2,72046659597031
+radix_sort_random_65536_int16;0.00054;100;3800,59259259259
+std_sort_random_1048576_int16;37.23869;100;
+aflag_sort_random_1048576_int16;10.7322;100;3,46980954510725
+radix_sort_random_1048576_int16;0.00755;100;4932,27682119205
+std_sort_random_4096_float16;0.12148999999999999;100;
+aflag_sort_random_4096_float16;0.06094;100;1,99360026255333
+radix_sort_random_4096_float16;5E-05;100;2429,8
+std_sort_random_65536_float16;2.21926;100;
+aflag_sort_random_65536_float16;0.8076099999999999;100;2,74793526578423
+radix_sort_random_65536_float16;0.00054;100;4109,74074074074
+std_sort_random_1048576_float16;33.721689999999995;100;
+aflag_sort_random_1048576_float16;12.83159;100;2,62802115715979
+radix_sort_random_1048576_float16;0.00809;100;4168,31767614339
+std_sort_random_4096_bfloat16;0.11811999999999999;100;
+aflag_sort_random_4096_bfloat16;0.05592;100;2,11230329041488
+radix_sort_random_4096_bfloat16;8E-05;100;1476,5
+std_sort_random_65536_bfloat16;1.7456;100;
+aflag_sort_random_65536_bfloat16;0.8365600000000001;100;2,08664052787606
+radix_sort_random_65536_bfloat16;0.00055;100;3173,81818181818
+std_sort_random_1048576_bfloat16;26.78719;100;
+aflag_sort_random_1048576_bfloat16;13.49863;100;1,98443767997197
+radix_sort_random_1048576_bfloat16;0.00787;100;3403,70902160102
+std_sort_random_4096_uint32;0.09795999999999999;100;
+aflag_sort_random_4096_uint32;0.08317000000000001;100;1,17782854394613
+radix_sort_random_4096_uint32;6E-05;100;1632,66666666667
+radix11_sort_random_4096_uint32;0.00676;100;14,491124260355
+std_sort_random_65536_uint32;2.0252600000000003;100;
+aflag_sort_random_65536_uint32;2.27735;100;0,889305552506203
+radix_sort_random_65536_uint32;0.00055;100;3682,29090909091
+radix11_sort_random_65536_uint32;0.11707000000000001;100;17,2995643632015
+std_sort_random_1048576_uint32;40.77935;100;
+aflag_sort_random_1048576_uint32;24.49281;100;1,66495187771432
+radix_sort_random_1048576_uint32;0.00876;100;4655,17694063927
+radix11_sort_random_1048576_uint32;1.97094;100;20,6903051335911
+std_sort_random_4096_int32;0.09687;100;
+aflag_sort_random_4096_int32;0.08048;100;1,20365308151093
+radix_sort_random_4096_int32;6E-05;100;1614,5
+radix11_sort_random_4096_int32;0.0068000000000000005;100;14,2455882352941
+std_sort_random_65536_int32;2.02483;100;
+aflag_sort_random_65536_int32;2.35839;100;0,858564529191525
+radix_sort_random_65536_int32;0.00049;100;4132,30612244898
+radix11_sort_random_65536_int32;0.12129;100;16,694121526919
+std_sort_random_1048576_int32;40.87814;100;
+aflag_sort_random_1048576_int32;25.13688;100;1,62622171088854
+radix_sort_random_1048576_int32;0.00875;100;4671,78742857143
+radix11_sort_random_1048576_int32;2.0177099999999997;100;20,2596706166892
+std_sort_random_4096_float32;0.11951;100;
+aflag_sort_random_4096_float32;0.1233;100;0,96926196269262
+radix_sort_random_4096_float32;8.999999999999999e-05;100;1327,88888888889
+radix11_sort_random_4096_float32;0.00876;100;13,6426940639269
+std_sort_random_65536_float32;2.52518;100;
+aflag_sort_random_65536_float32;2.04183;100;1,23672391922932
+radix_sort_random_65536_float32;0.00055;100;4591,23636363636
+radix11_sort_random_65536_float32;0.14076;100;17,93961352657
+std_sort_random_1048576_float32;51.03022;100;
+aflag_sort_random_1048576_float32;34.20424;100;1,49192673189055
+radix_sort_random_1048576_float32;0.00882;100;5785,73922902494
+radix11_sort_random_1048576_float32;2.37332;100;21,5016179866179
+std_sort_random_4096_uint64;0.09411;100;
+aflag_sort_random_4096_uint64;0.0981;100;0,959327217125382
+radix_sort_random_4096_uint64;0.00010999999999999999;100;855,545454545455
+radix13_sort_random_4096_uint64;0.02685;100;3,50502793296089
+radix16_sort_random_4096_uint64;0.07571;100;1,24303262448818
+std_sort_random_65536_uint64;1.99988;100;
+aflag_sort_random_65536_uint64;2.0942;100;0,954961321745774
+radix_sort_random_65536_uint64;0.0007000000000000001;100;2856,97142857143
+radix13_sort_random_65536_uint64;0.32776000000000005;100;6,10165975103734
+radix16_sort_random_65536_uint64;0.41052;100;4,87157751144889
+std_sort_random_1048576_uint64;40.428270000000005;100;
+aflag_sort_random_1048576_uint64;31.39696;100;1,28764918641805
+radix_sort_random_1048576_uint64;0.00871;100;4641,59242250287
+radix13_sort_random_1048576_uint64;5.20845;100;7,76205396999107
+radix16_sort_random_1048576_uint64;5.80143;100;6,96867324090785
+std_sort_random_4096_int64;0.09655;100;
+aflag_sort_random_4096_int64;0.1;100;0,9655
+radix_sort_random_4096_int64;8E-05;100;1206,875
+radix13_sort_random_4096_int64;0.02535;100;3,80867850098619
+radix16_sort_random_4096_int64;0.07518;100;1,28425113061985
+std_sort_random_65536_int64;2.0263999999999998;100;
+aflag_sort_random_65536_int64;2.1414500000000003;100;0,946274720399729
+radix_sort_random_65536_int64;0.0005899999999999999;100;3434,57627118644
+radix13_sort_random_65536_int64;0.33511;100;6,04696965175614
+radix16_sort_random_65536_int64;0.40442;100;5,01063251075614
+std_sort_random_1048576_int64;40.7164;100;
+aflag_sort_random_1048576_int64;31.99634;100;1,27253304596713
+radix_sort_random_1048576_int64;0.00962;100;4232,47401247401
+radix13_sort_random_1048576_int64;5.25229;100;7,75212335952508
+radix16_sort_random_1048576_int64;5.85426;100;6,95500370670247
+std_sort_random_4096_float64;0.1195;100;
+aflag_sort_random_4096_float64;0.10152;100;1,17710795902285
+radix_sort_random_4096_float64;0.00017999999999999998;100;663,888888888889
+radix13_sort_random_4096_float64;0.0281;100;4,25266903914591
+radix16_sort_random_4096_float64;0.06901;100;1,73163309665266
+std_sort_random_65536_float64;2.5447800000000003;100;
+aflag_sort_random_65536_float64;2.26738;100;1,12234385061172
+radix_sort_random_65536_float64;0.00157;100;1620,87898089172
+radix13_sort_random_65536_float64;0.35831;100;7,10217409505735
+radix16_sort_random_65536_float64;0.42373;100;6,00566398414085
+std_sort_random_1048576_float64;51.454530000000005;100;
+aflag_sort_random_1048576_float64;38.357730000000004;100;1,34143834893254
+radix_sort_random_1048576_float64;0.0252;100;2041,84642857143
+radix13_sort_random_1048576_float64;5.87375;100;8,76008171951479
+radix16_sort_random_1048576_float64;5.63101;100;9,13770886572746
+std_sort_low_card_4096_delta_0;0.00208;100;
+std_radix_low_card_4096_delta_0;5E-05;100;41,6
+std_aflag_low_card_4096_delta_0;0.014830000000000001;100;0,140256237356709
+std_sort_low_card_4096_delta_2;0.01613;100;
+std_radix_low_card_4096_delta_2;7.000000000000001e-05;100;230,428571428571
+std_aflag_low_card_4096_delta_2;0.015229999999999999;100;1,05909389363099
+std_sort_low_card_4096_delta_5;0.02577;100;
+std_radix_low_card_4096_delta_5;5E-05;100;515,4
+std_aflag_low_card_4096_delta_5;0.01525;100;1,68983606557377
+std_sort_low_card_4096_delta_20;0.04245;100;
+std_radix_low_card_4096_delta_20;4E-05;100;1061,25
+std_aflag_low_card_4096_delta_20;0.014490000000000001;100;2,9296066252588
+std_sort_low_card_4096_delta_100;0.06476;100;
+std_radix_low_card_4096_delta_100;6E-05;100;1079,33333333333
+std_aflag_low_card_4096_delta_100;0.0152;100;4,26052631578947
+std_sort_low_card_65536_delta_0;0.03141;100;
+std_radix_low_card_65536_delta_0;0.00042;100;74,7857142857143
+std_aflag_low_card_65536_delta_0;0.23526;100;0,133511859219587
+std_sort_low_card_65536_delta_2;0.25011;100;
+std_radix_low_card_65536_delta_2;0.00046;100;543,717391304348
+std_aflag_low_card_65536_delta_2;0.23393999999999998;100;1,06912028725314
+std_sort_low_card_65536_delta_5;0.38270000000000004;100;
+std_radix_low_card_65536_delta_5;0.00045;100;850,444444444445
+std_aflag_low_card_65536_delta_5;0.23472;100;1,6304533060668
+std_sort_low_card_65536_delta_20;0.63091;100;
+std_radix_low_card_65536_delta_20;0.00043;100;1467,23255813953
+std_aflag_low_card_65536_delta_20;0.23668;100;2,66566672300152
+std_sort_low_card_65536_delta_100;0.9491200000000001;100;
+std_radix_low_card_65536_delta_100;0.00046;100;2063,30434782609
+std_aflag_low_card_65536_delta_100;0.23443000000000003;100;4,04862858849123
+std_sort_low_card_1048576_delta_0;0.49563;100;
+std_radix_low_card_1048576_delta_0;0.007890000000000001;100;62,8174904942966
+std_aflag_low_card_1048576_delta_0;4.19361;100;0,118186955868571
+std_sort_low_card_1048576_delta_2;3.89428;100;
+std_radix_low_card_1048576_delta_2;0.00786;100;495,455470737913
+std_aflag_low_card_1048576_delta_2;4.19032;100;0,92935145764524
+std_sort_low_card_1048576_delta_5;5.91783;100;
+std_radix_low_card_1048576_delta_5;0.0078000000000000005;100;758,696153846154
+std_aflag_low_card_1048576_delta_5;4.18867;100;1,4128183886532
+std_sort_low_card_1048576_delta_20;9.83696;100;
+std_radix_low_card_1048576_delta_20;0.00786;100;1251,52162849873
+std_aflag_low_card_1048576_delta_20;4.18847;100;2,34858074666883
+std_sort_low_card_1048576_delta_100;14.72277;100;
+std_radix_low_card_1048576_delta_100;0.007189999999999999;100;2047,67315716273
+std_aflag_low_card_1048576_delta_100;4.18093;100;3,52141030823286
