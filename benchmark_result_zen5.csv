@@ -1,0 +1,120 @@
+Algorithm name,DType,List size,Max value,Min total duration,Min duration per element,Sorted
+Selection sort, uint8, 5, 3000, 20, 4.0, True
+Insertion sort, uint8, 5, 3000, 20, 4.0, True
+Std sort, uint8, 5, 3000, 20, 4.0, True
+Quick sort, uint8, 5, 3000, 30, 6.0, True
+Counting sort, uint8, 5, 3000, 130, 26.0, True
+Radix sort, uint8, 5, 3000, 110, 22.0, True
+AFlag sort, uint8, 5, 3000, 140, 28.0, True
+Network sort, uint8, 5, 3000, 20, 4.0, True
+Selection sort, uint8, 20, 3000, 110, 5.5, True
+Insertion sort, uint8, 20, 3000, 60, 3.0, True
+Std sort, uint8, 20, 3000, 50, 2.5, True
+Quick sort, uint8, 20, 3000, 90, 4.5, True
+Counting sort, uint8, 20, 3000, 130, 6.5, True
+Radix sort, uint8, 20, 3000, 120, 6.0, True
+AFlag sort, uint8, 20, 3000, 190, 9.5, True
+Network sort, uint8, 20, 3000, 30, 1.5, True
+Selection sort, uint8, 32, 3000, 290, 9.0625, True
+Insertion sort, uint8, 32, 3000, 130, 4.0625, True
+Std sort, uint8, 32, 3000, 70, 2.1875, True
+Quick sort, uint8, 32, 3000, 190, 5.9375, True
+Counting sort, uint8, 32, 3000, 141, 4.40625, True
+Radix sort, uint8, 32, 3000, 130, 4.0625, True
+AFlag sort, uint8, 32, 3000, 250, 7.8125, True
+Network sort, uint8, 32, 3000, 60, 1.875, True
+Selection sort, uint8, 50, 3000, 591, 11.82, True
+Insertion sort, uint8, 50, 3000, 290, 5.8, True
+Std sort, uint8, 50, 3000, 111, 2.22, True
+Quick sort, uint8, 50, 3000, 330, 6.6, True
+Counting sort, uint8, 50, 3000, 160, 3.2, True
+Radix sort, uint8, 50, 3000, 140, 2.8, True
+AFlag sort, uint8, 50, 3000, 271, 5.42, True
+Selection sort, uint8, 64, 3000, 991, 15.484375, True
+Insertion sort, uint8, 64, 3000, 450, 7.03125, True
+Std sort, uint8, 64, 3000, 160, 2.5, True
+Quick sort, uint8, 64, 3000, 340, 5.3125, True
+Counting sort, uint8, 64, 3000, 190, 2.96875, True
+Radix sort, uint8, 64, 3000, 150, 2.34375, True
+AFlag sort, uint8, 64, 3000, 360, 5.625, True
+Network sort, uint8, 64, 3000, 190, 2.96875, True
+Selection sort, uint8, 300, 3000, 27462, 91.54, True
+Insertion sort, uint8, 300, 3000, 10580, 35.266666666666666, True
+Std sort, uint8, 300, 3000, 882, 2.94, True
+Quick sort, uint8, 300, 3000, 2315, 7.716666666666667, True
+Counting sort, uint8, 300, 3000, 531, 1.77, True
+Radix sort, uint8, 300, 3000, 320, 1.0666666666666667, True
+AFlag sort, uint8, 300, 3000, 1332, 4.44, True
+Selection sort, int8, 300, 3000, 24967, 83.22333333333333, True
+Insertion sort, int8, 300, 3000, 10319, 34.39666666666667, True
+Std sort, int8, 300, 3000, 941, 3.1366666666666667, True
+Quick sort, int8, 300, 3000, 2164, 7.213333333333333, True
+Parallel Tim sort, int8, 300, 3000, 17002, 56.67333333333333, True
+Radix sort, int8, 300, 3000, 501, 1.67, True
+AFlag sort, int8, 300, 3000, 1503, 5.01, True
+Selection sort, uint16, 3000, 3000, 2600354, 866.7846666666667, True
+Insertion sort, uint16, 3000, 3000, 501554, 167.18466666666666, True
+Std sort, uint16, 3000, 3000, 10480, 3.493333333333333, True
+Quick sort, uint16, 3000, 3000, 81413, 27.137666666666668, True
+Parallel Tim sort, uint16, 3000, 3000, 48792, 16.264, True
+Counting sort, uint16, 3000, 3000, 7554, 2.518, True
+Radix sort, uint16, 3000, 3000, 2514, 0.838, True
+AFlag sort, uint16, 300, 3000, 4188, 13.96, True
+Selection sort, int16, 3000, 3000, 2636883, 878.961, True
+Insertion sort, int16, 3000, 3000, 521111, 173.70366666666666, True
+Std sort, int16, 3000, 3000, 11572, 3.8573333333333335, True
+Quick sort, int16, 3000, 3000, 86764, 28.921333333333333, True
+Parallel Tim sort, int16, 3000, 3000, 48983, 16.327666666666666, True
+Radix sort, int16, 3000, 3000, 3657, 1.219, True
+AFlag sort, int16, 3000, 3000, 29646, 9.882, True
+Selection sort, float16, 3000, 3000, 4903731, 1634.577, True
+Insertion sort, float16, 3000, 3000, 930963, 310.321, True
+Std sort, float16, 3000, 3000, 16120, 5.373333333333333, True
+Quick sort, float16, 3000, 3000, 112862, 37.620666666666665, True
+Parallel Tim sort, float16, 3000, 3000, 79941, 26.647, True
+Radix sort, float16, 3000, 3000, 3296, 1.0986666666666667, True
+AFlag sort, float16, 3000, 3000, 32852, 10.950666666666667, True
+Std sort, uint32, 300000, 2000000000, 12714983, 42.38327666666667, True
+Quick sort, uint32, 300000, 2000000000, 16932722, 56.44240666666666, True
+Parallel Tim sort, uint32, 300000, 2000000000, 2413162, 8.043873333333334, True
+Radix sort, uint32, 300000, 2000000000, 214524, 0.71508, True
+Radix sort 11, uint32, 300000, 2000000000, 570684, 1.90228, True
+AFlag sort, uint32, 300000, 2000000000, 8509217, 28.364056666666666, True
+Std sort, int32, 300000, 2000000000, 12733298, 42.44432666666667, True
+Quick sort, int32, 300000, 2000000000, 17070642, 56.90214, True
+Parallel Tim sort, int32, 300000, 2000000000, 2375151, 7.91717, True
+Radix sort, int32, 300000, 2000000000, 215175, 0.71725, True
+Radix sort 11, int32, 300000, 2000000000, 576395, 1.9213166666666666, True
+AFlag sort, int32, 300000, 2000000000, 8408908, 28.029693333333334, True
+Std sort, float32, 5000000, 2000000000, 310606896, 62.1213792, True
+Quick sort, float32, 5000000, 2000000000, 379008475, 75.801695, True
+Parallel Tim sort, float32, 5000000, 2000000000, 75996656, 15.1993312, True
+Radix sort, float32, 5000000, 2000000000, 5407569, 1.0815138, True
+Radix sort 11, float32, 5000000, 2000000000, 26955668, 5.3911336, True
+AFlag sort, float32, 5000000, 2000000000, 116569585, 23.313917, True
+Std sort, uint64, 3000000, 200000000000, 149192249, 49.73074966666667, True
+Quick sort, uint64, 3000000, 200000000000, 200664101, 66.88803366666667, True
+Parallel Tim sort, uint64, 3000000, 200000000000, 25465323, 8.488441, True
+Radix sort, uint64, 3000000, 200000000000, 3360926, 1.1203086666666666, True
+Radix sort 13, uint64, 3000000, 200000000000, 28910206, 9.636735333333334, True
+AFlag sort, uint64, 3000000, 200000000000, 140966776, 46.988925333333334, True
+Std sort, int64, 3000000, 200000000000, 162215561, 54.07185366666667, True
+Quick sort, int64, 3000000, 200000000000, 199397446, 66.46581533333334, True
+Parallel Tim sort, int64, 3000000, 200000000000, 23197033, 7.732344333333334, True
+Radix sort, int64, 3000000, 200000000000, 3424897, 1.1416323333333334, True
+Radix sort 13, int64, 3000000, 200000000000, 29094914, 9.698304666666667, True
+AFlag sort, int64, 3000000, 200000000000, 147785088, 49.261696, True
+Std sort, float64, 3000000, 200000000000, 179190771, 59.730257, True
+Quick sort, float64, 3000000, 200000000000, 221578644, 73.859548, True
+Parallel Tim sort, float64, 3000000, 200000000000, 46145177, 15.381725666666666, True
+Radix sort, float64, 3000000, 200000000000, 3595367, 1.1984556666666666, True
+Radix sort 13, float64, 3000000, 200000000000, 36828430, 12.276143333333334, True
+Radix sort 16, float64, 3000000, 200000000000, 35741594, 11.913864666666667, True
+AFlag sort, float64, 3000000, 200000000000, 158084493, 52.694831, True
+Std sort, float64, 300, 200, 1112, 3.7066666666666666, True
+Quick sort, float64, 300, 200, 2585, 8.616666666666667, True
+Parallel Tim sort, float64, 300, 200, 25238, 84.12666666666667, True
+Radix sort, float64, 300, 200, 692, 2.3066666666666666, True
+Radix sort 13, float64, 300, 200, 16391, 54.63666666666666, True
+Radix sort 16, float64, 300, 200, 61205, 204.01666666666668, True
+AFlag sort, float64, 300, 200, 11391, 37.97, True
