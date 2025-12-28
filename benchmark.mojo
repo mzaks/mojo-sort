@@ -10,6 +10,7 @@ from insertion_sort import insertion_sort
 from count_sort import counting_sort
 from tim_sort import tim_sort_scalar, parallel_tim_sort_scalar
 from algorithm._sorting_network import _sort as n_sort
+from radix_sorting.aflag_8 import aflag_sort as aflag8_sort
 
 
 fn random_vec[D: DType](size: Int, max: Int = 3000) -> List[SIMD[D, 1]]:
@@ -81,6 +82,7 @@ fn main():
     benchmark[DType.uint8, counting_sort[DType.uint8]]("Counting sort", 5)
     benchmark[DType.uint8, radix_sort[DType.uint8]]("Radix sort", 5)
     benchmark[DType.uint8, aflag_sort[DType.uint8]]("AFlag sort", 5)
+    benchmark[DType.uint8, aflag8_sort]("AFlag8 sort", 5)
     benchmark[DType.uint8, network_sort_5[DType.uint8]]("Network sort", 5)
 
     benchmark[DType.uint8, selection_sort[DType.uint8]]("Selection sort", 20)
@@ -91,6 +93,7 @@ fn main():
     benchmark[DType.uint8, counting_sort[DType.uint8]]("Counting sort", 20)
     benchmark[DType.uint8, radix_sort[DType.uint8]]("Radix sort", 20)
     benchmark[DType.uint8, aflag_sort[DType.uint8]]("AFlag sort", 20)
+    benchmark[DType.uint8, aflag8_sort]("AFlag8 sort", 20)
     benchmark[DType.uint8, network_sort_20[DType.uint8]]("Network sort", 20)
     
     benchmark[DType.uint8, selection_sort[DType.uint8]]("Selection sort", 32)
@@ -101,6 +104,7 @@ fn main():
     benchmark[DType.uint8, counting_sort[DType.uint8]]("Counting sort", 32)
     benchmark[DType.uint8, radix_sort[DType.uint8]]("Radix sort", 32)
     benchmark[DType.uint8, aflag_sort[DType.uint8]]("AFlag sort", 32)
+    benchmark[DType.uint8, aflag8_sort]("AFlag8 sort", 32)
     benchmark[DType.uint8, network_sort_32[DType.uint8]]("Network sort", 32)
 
     benchmark[DType.uint8, selection_sort[DType.uint8]]("Selection sort", 50)
@@ -111,6 +115,7 @@ fn main():
     benchmark[DType.uint8, counting_sort[DType.uint8]]("Counting sort", 50)
     benchmark[DType.uint8, radix_sort[DType.uint8]]("Radix sort", 50)
     benchmark[DType.uint8, aflag_sort[DType.uint8]]("AFlag sort", 50)
+    benchmark[DType.uint8, aflag8_sort]("AFlag8 sort", 50)
 
     benchmark[DType.uint8, selection_sort[DType.uint8]]("Selection sort", 64)
     benchmark[DType.uint8, insertion_sort[DType.uint8]]("Insertion sort", 64)
@@ -120,6 +125,7 @@ fn main():
     benchmark[DType.uint8, counting_sort[DType.uint8]]("Counting sort", 64)
     benchmark[DType.uint8, radix_sort[DType.uint8]]("Radix sort", 64)
     benchmark[DType.uint8, aflag_sort[DType.uint8]]("AFlag sort", 64)
+    benchmark[DType.uint8, aflag8_sort]("AFlag8 sort", 64)
     benchmark[DType.uint8, network_sort_64[DType.uint8]]("Network sort", 64)
 
     benchmark[DType.uint8, selection_sort[DType.uint8]]("Selection sort", 300)
@@ -130,6 +136,7 @@ fn main():
     benchmark[DType.uint8, counting_sort[DType.uint8]]("Counting sort", 300)
     benchmark[DType.uint8, radix_sort[DType.uint8]]("Radix sort", 300)
     benchmark[DType.uint8, aflag_sort[DType.uint8]]("AFlag sort", 300)
+    benchmark[DType.uint8, aflag8_sort]("AFlag8 sort", 300)
 
     benchmark[DType.int8, selection_sort[DType.int8]]("Selection sort", 300)
     benchmark[DType.int8, insertion_sort[DType.int8]]("Insertion sort", 300)

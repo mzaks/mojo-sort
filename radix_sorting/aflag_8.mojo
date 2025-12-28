@@ -8,7 +8,7 @@ fn aflag_sort(mut list: List[UInt8]):
     var offsets = counts + 256
 
     for i in range(size):
-        var bucket = list[i]
+        var bucket = list.unsafe_get(i)
         counts.store(bucket, counts.load(bucket) + 1)
     
     offsets.store(0)
@@ -20,7 +20,7 @@ fn aflag_sort(mut list: List[UInt8]):
     
     var cursor = 0
     while cursor < size:
-        var bucket = list[cursor]
+        var bucket = list.unsafe_get(cursor)
         var offset = offsets[bucket]
         if offset == counts[bucket]:
             cursor += 1
@@ -28,7 +28,7 @@ fn aflag_sort(mut list: List[UInt8]):
         if offset == cursor:
             cursor += 1
         else:
-            list[offset], list[cursor] = list[cursor], list[offset]
+            list.unsafe_get(Int(offset)), list.unsafe_get(cursor) = list.unsafe_get(cursor), list.unsafe_get(Int(offset))
         offsets[bucket] += 1
 
 
