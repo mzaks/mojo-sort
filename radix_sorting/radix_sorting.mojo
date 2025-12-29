@@ -35,21 +35,24 @@ fn _get_index[D: DType, place: Int](vector: List[Scalar[D]], v_index: Int) -> In
         return Int(vector.unsafe_get(v_index) >> place) & 255
 
 @always_inline
-fn _counting_sort[D: DType, CD:DType, place: Int](mut vector: List[Scalar[D]]):
+fn _counting_sort[D: DType, CD:DType, place: Int](mut vector: List[Scalar[D]], mut needsSorting: Bool):
+
+    if needsSorting == False:
+        return
+
     var size = len(vector)
 
     var counts = stack_allocation[256, CD]()
     memset_zero(counts, 256)
     
-    var needsSorting = False
-    var prev_index =  _get_index[D, place](vector, 0)
-    counts.offset(prev_index).store(counts.offset(prev_index).load() + 1)
+    needsSorting = False
+    var index =  _get_index[D, place](vector, 0)
+    counts.offset(index).store(counts.offset(index).load() + 1)
 
     for i in range(1, size):
         var index = _get_index[D, place](vector, i)
-        needsSorting = needsSorting or prev_index > index 
+        needsSorting = needsSorting or vector.unsafe_get(i) < vector.unsafe_get(i-1) 
         counts.offset(index).store(counts.offset(index).load() + 1)
-        prev_index = index
 
     if needsSorting == False:
         return
@@ -59,7 +62,7 @@ fn _counting_sort[D: DType, CD:DType, place: Int](mut vector: List[Scalar[D]]):
         count += counts.offset(i).load()
         counts.offset(i).store(count)
 
-    var output = List[Scalar[D]](capacity=size)
+    var output = List[Scalar[D]](unsafe_uninit_length=size)
     var i = size - 1
     while i >= 0:
         var index = _get_index[D, place](vector, i)
@@ -70,10 +73,10 @@ fn _counting_sort[D: DType, CD:DType, place: Int](mut vector: List[Scalar[D]]):
 
 @always_inline
 fn _radix_sort[D: DType, CD: DType](mut vector: List[SIMD[D, 1]]):
-
+    var needsSorting = True
     @parameter
     for i in range(bit_width_of[D]() >> 3):
-        _counting_sort[D, CD, i * 8](vector)
+        _counting_sort[D, CD, i * 8](vector, needsSorting)
 
     # @parameter
     # fn call_counting_sort[index: Int]():
@@ -100,7 +103,8 @@ fn _radix_sort[D: DType, CD: DType](mut vector: List[SIMD[D, 1]]):
 @always_inline
 fn radix_sort[D: DType](mut vector: List[SIMD[D, 1]]):
     constrained[8 <= bit_width_of[D]() <= 64, "D needs to be between 1 and 8 bytes wide"]()
-
+    if len(vector) < 2:
+        return
     _radix_sort[D, DType.uint32](vector)
 
     # NOTE: I hoped that the code below would make the algorithm faster but it made it slower

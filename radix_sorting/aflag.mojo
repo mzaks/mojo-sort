@@ -89,8 +89,10 @@ fn _aflag_sort[origin: MutOrigin, D: DType, //](mut list: Span[Scalar[D], origin
         var cur_count = Int(counts[partitions[i]])
         var count = cur_count - prev_count
         var s = list.unsafe_subspan(offset=prev_count, length=count)
-        # TODO: use other sort for smaller partitions
-        _aflag_sort(s, level - 1)
+        if count <= 256:
+            sort(s)
+        else:
+            _aflag_sort(s, level - 1)
 
 
 fn aflag_sort[origin: MutOrigin,//,D: DType](mut list: Span[Scalar[D], origin]):

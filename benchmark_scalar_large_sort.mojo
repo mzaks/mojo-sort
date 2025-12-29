@@ -15,7 +15,7 @@ from random import *
 
 from benchmark import Bench, BenchConfig, Bencher, BenchId, keep
 from builtin.sort import sort
-from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16, aflag_sort
+from radix_sorting import radix_sort, radix_sort11, radix_sort13, radix_sort16, aflag_sort, aflag_copy_sort
 from memory.unsafe import bit_width_of, bitcast
 from pathlib import cwd
 
@@ -94,6 +94,26 @@ fn bench_large_list_sort[dtype: DType](mut m: Bench, count: Int) raises:
         fn call_fn():
             var s = Span(list)
             aflag_sort(s)
+
+        b.iter_preproc[call_fn, preproc]()
+        assert_sorted(list)
+        _ = list^
+
+    @parameter
+    fn bench_aflag_copy_sort(mut b: Bencher) raises:
+        seed(1)
+        var list = List(length=count, fill=Scalar[dtype]())
+
+        @always_inline
+        @parameter
+        fn preproc():
+            randomize_list(list, count)
+
+        @always_inline
+        @parameter
+        fn call_fn():
+            var s = Span(list)
+            aflag_copy_sort(s)
 
         b.iter_preproc[call_fn, preproc]()
         assert_sorted(list)
@@ -184,6 +204,10 @@ fn bench_large_list_sort[dtype: DType](mut m: Bench, count: Int) raises:
         BenchId(String("aflag_sort_random_", count, "_", dtype))
     )
 
+    m.bench_function[bench_aflag_copy_sort](
+        BenchId(String("aflag_copy_sort_random_", count, "_", dtype))
+    )
+
     m.bench_function[bench_radix_sort](
         BenchId(String("radix_sort_random_", count, "_", dtype))
     )
@@ -267,6 +291,26 @@ fn bench_low_cardinality_list_sort(mut m: Bench, count: Int, delta: Int) raises:
         b.iter_preproc[call_fn, preproc]()
         assert_sorted(list)
         _ = list^
+
+    @parameter
+    fn bench_aflag_copy_sort(mut b: Bencher) raises:
+        seed(1)
+        var list = List(length=count, fill=UInt8())
+
+        @always_inline
+        @parameter
+        fn preproc():
+            randomize_list(list, count)
+
+        @always_inline
+        @parameter
+        fn call_fn():
+            var s = Span(list)
+            aflag_copy_sort(s)
+
+        b.iter_preproc[call_fn, preproc]()
+        assert_sorted(list)
+        _ = list^
     
     m.bench_function[bench_sort_list](
         BenchId(String("std_sort_low_card_", count, "_delta_", delta))
@@ -278,6 +322,9 @@ fn bench_low_cardinality_list_sort(mut m: Bench, count: Int, delta: Int) raises:
 
     m.bench_function[bench_aflag_sort](
         BenchId(String("std_aflag_low_card_", count, "_delta_", delta))
+    )
+    m.bench_function[bench_aflag_copy_sort](
+        BenchId(String("std_aflag_copy_low_card_", count, "_delta_", delta))
     )
 
 
