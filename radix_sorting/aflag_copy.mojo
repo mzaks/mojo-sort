@@ -30,7 +30,7 @@ fn _get_index[D: DType, //](v_index: Int, place: Int, list: UnsafePointer[Scalar
     else:
         return UInt8(list[v_index] >> place)
 
-fn _aflag_sort[origin: MutOrigin, D: DType, //](mut list: Span[Scalar[D], origin], level: Int):
+fn _aflag_sort[origin: MutOrigin, origin2: MutOrigin, D: DType, //](mut list: Span[Scalar[D], origin], level: Int, copy: UnsafePointer[Scalar[D], origin2]):
 
     var size = len(list)
     if size < 2:
@@ -43,11 +43,13 @@ fn _aflag_sort[origin: MutOrigin, D: DType, //](mut list: Span[Scalar[D], origin
     var place = level * 8
     var index =  Int(_get_index(0, place, list.unsafe_ptr()))
     counts[index] += 1
+    copy[0] = list.unsafe_get(0)
 
     for i in range(1, size):
         var index = Int(_get_index(i, place, list.unsafe_ptr()))
         needsSorting = needsSorting or list.unsafe_get(i) < list.unsafe_get(i-1) 
         counts[index] += 1
+        copy[i] = list.unsafe_get(i)
     
     if needsSorting == False and level == 0:
         return
@@ -69,15 +71,15 @@ fn _aflag_sort[origin: MutOrigin, D: DType, //](mut list: Span[Scalar[D], origin
         counts[i] = total_count
     
     if needsSorting:
-        var copy = alloc[Scalar[D]](size)
-        memcpy(dest=copy, src=list.unsafe_ptr(), count=size)
+        # var copy = alloc[Scalar[D]](size)
+        # memcpy(dest=copy, src=list.unsafe_ptr(), count=size)
         var i = size - 1
         while i >= 0:
             var index = _get_index(i, place, copy)
             list.unsafe_get(Int(counts.offset(index).load() - 1)) = copy[i]
             counts.offset(index).store(counts.offset(index).load() - 1)
             i -= 1
-        copy.free()
+        # copy.free()
     
     if partitions_count == 0 or level == 0:
         return
@@ -91,8 +93,10 @@ fn _aflag_sort[origin: MutOrigin, D: DType, //](mut list: Span[Scalar[D], origin
         if count <= 256:
             sort(s)
         else:
-            _aflag_sort(s, level - 1)
+            _aflag_sort(s, level - 1, copy)
 
 
 fn aflag_copy_sort[origin: MutOrigin,//,D: DType](mut list: Span[Scalar[D], origin]):
-    _aflag_sort(list, (bit_width_of[D]() >> 3) - 1)
+    var copy = alloc[Scalar[D]](len(list))
+    _aflag_sort(list, (bit_width_of[D]() >> 3) - 1, copy)
+    copy.free()
