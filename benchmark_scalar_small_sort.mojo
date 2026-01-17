@@ -15,7 +15,7 @@ from random import *
 
 from benchmark import Bench, BenchConfig, Bencher, BenchId
 from builtin.sort import _insertion_sort, _small_sort, sort
-from algorithm._sorting_network import _sort as network_sort
+from sorting_network import _sort as network_sort
 
 # ===-----------------------------------------------------------------------===#
 # Benchmark Utils
