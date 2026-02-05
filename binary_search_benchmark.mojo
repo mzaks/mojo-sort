@@ -21,14 +21,14 @@ def main():
     fn binary_search_random_items():
         total1 = 0
         for i in range(searches):
-            total1 += binary_search[with_prefetch=False](l.data, len(l), random_elements[i])
+            total1 += binary_search[with_prefetch=False](l.unsafe_ptr(), len(l), random_elements[i])
     
     var total2 = 0
     @parameter
     fn classic_binary_search_random_items():
         total2 = 0
         for i in range(searches):
-            total2 += classic_binary_search(l.data, len(l), random_elements[i])
+            total2 += classic_binary_search(l.unsafe_ptr(), len(l), random_elements[i])
 
     var result = run[binary_search_random_items]()
     result.print_full()
